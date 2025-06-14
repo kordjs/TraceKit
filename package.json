@@ -1,0 +1,27 @@
+{
+  "name": "@kordjs/logger",
+  "version": "1.0.0",
+  "description": "Simple logger, nothing special.",
+  "main": "",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0sapphy/LogIt.git"
+  },
+  "keywords": [
+    "logger",
+    "kordjs"
+  ],
+  "author": "0sapphy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0sapphy/LogIt/issues"
+  },
+  "homepage": "https://github.com/0sapphy/LogIt#readme",
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  }
+}
