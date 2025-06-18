@@ -1,0 +1,15 @@
+{
+  "name": "@kordjs/logger-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "logger.darwin-universal.node",
+  "files": [
+    "logger.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}
