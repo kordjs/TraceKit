@@ -1,40 +1,29 @@
 {
-    "compilerOptions": {
-        // Project Options.
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "es6",
+    "outDir": "./dist",
+    "rootDir": "./src/",
 
-        "lib": ["ESNext"],
-        "target": "es6",
-        "outDir": "./dist",
-        "rootDir": "./src/",
-        "typeRoots": ["./node_modules/@types"],
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "paths": {},
 
-        // Module Resolution
+    "sourceMap": true,
+    "sourceRoot": "./src",
 
-        "baseUrl": "./",
-        "esModuleInterop": true,
-        "moduleResolution": "node",
-        "paths": {},
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
 
-        // Source Map
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
 
-        "sourceMap": true,
-        "sourceRoot": "./src",
-
-        // Strict Checks
-
-        "alwaysStrict": true,
-        "allowUnreachableCode": false,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-
-        // Linter Checks
-
-        "noImplicitReturns": true,
-        "noUncheckedIndexedAccess": true, 
-        "noUnusedLocals": true,
-        "noUnusedParameters": true
-    },
-    
-    "include": ["./src/**/*.ts"],
-    "exclude": ["node_modules/**/*"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules/**/*"]
 }
