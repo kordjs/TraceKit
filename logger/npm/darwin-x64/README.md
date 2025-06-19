@@ -1,0 +1,3 @@
+# `@kordjs/logger-darwin-x64`
+
+This is the **x86_64-apple-darwin** binary for `@kordjs/logger`
