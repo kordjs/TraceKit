@@ -122,6 +122,7 @@ jobs:
         shell: bash
       - name: Install dependencies
         run: yarn install
+        working-directory: logger
       - name: Setup node x86
         uses: actions/setup-node@v4
         if: matrix.settings.target == 'i686-pc-windows-msvc'
@@ -140,6 +141,7 @@ jobs:
         run: ${{ matrix.settings.build }}
         if: ${{ !matrix.settings.docker }}
         shell: bash
+        working-directory: logger
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
