@@ -1,0 +1,40 @@
+{
+  "name": "@kordjs/logger",
+  "version": "1.0.0",
+  "description": "A Logger.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsup",
+    "dev:run": "tsup && clear && node tests/.node",
+    "dev": "tsup --watch",
+    "pretty": "prettier --write .",
+    "lint": "prettier --check .",
+    "prepare": "npm run build && npm run pretty && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0sapphy/LogIt.git"
+  },
+  "keywords": [
+    "logger",
+    "kordjs"
+  ],
+  "author": "0sapphy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0sapphy/LogIt/issues"
+  },
+  "homepage": "https://github.com/0sapphy/LogIt#readme",
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "prettier": "^3.5.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "zod": "^3.25.67"
+  },
+  "dependencies": {
+    "ansi-colors": "^4.1.3"
+  }
+}
