@@ -22,8 +22,8 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build Project
-        run: npm run Build
+      - name: Prepare The Project
+        run: npm run prepare
 
       - name: Publish To NPM
         run: npm publish --access public
