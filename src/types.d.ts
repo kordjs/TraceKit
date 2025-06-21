@@ -12,7 +12,6 @@ export interface SimpleLoggerOptions {
   colorize?: boolean;
 }
 
-
 export type JSONValue =
   | string
   | number

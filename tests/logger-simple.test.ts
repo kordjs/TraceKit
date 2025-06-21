@@ -1,4 +1,4 @@
-// Test logging functions 
+// Test logging functions
 // With different levels and logger options.
 
 import { SimpleLogger } from "../dist";
@@ -11,7 +11,7 @@ test("SimpleLogger should log info messages with default options", () => {
   logger.info(["This is an info message"]);
 
   expect(consoleSpy).toHaveBeenCalledWith(
-    expect.stringContaining("INFO: This is an info message")
+    expect.stringContaining("INFO: This is an info message"),
   );
 
   consoleSpy.mockRestore();
@@ -24,7 +24,7 @@ test("SimpleLogger should log info messages with custom options", () => {
   logger.info(["This is another info message"]);
 
   expect(consoleSpy).toHaveBeenCalledWith(
-    expect.stringContaining("INFO: This is another info message")
+    expect.stringContaining("INFO: This is another info message"),
   );
 
   consoleSpy.mockRestore();
@@ -37,7 +37,7 @@ test("SimpleLogger should log info messages with timestamp w/o color", () => {
   logger.info(["This is an info message with timestamp"]);
 
   expect(consoleSpy).toHaveBeenCalledWith(
-    expect.stringContaining("INFO: This is an info message with timestamp")
+    expect.stringContaining("INFO: This is an info message with timestamp"),
   );
 
   consoleSpy.mockRestore();

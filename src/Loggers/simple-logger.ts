@@ -17,24 +17,23 @@ export class SimpleLogger {
     if (!optionals) {
       console.info(
         this.check("color") ? Colors.bold.underline.green("INFO") : "INFO",
-        Colors.bold.gray(message)
+        Colors.bold.gray(message),
       );
 
-      return this
+      return this;
     }
 
     const optionalOptions = {};
 
     for (const [key, value] of Object.entries(optionals)) {
-      Object.assign(optionalOptions, 
-        { [key]: value }
-      );
+      Object.assign(optionalOptions, { [key]: value });
     }
 
     console.info(
       this.check("color") ? Colors.bold.underline.green("INFO") : "INFO",
       Colors.bold.gray(message),
-      "\n  ", optionalOptions
+      "\n  ",
+      optionalOptions,
     );
 
     return this;
