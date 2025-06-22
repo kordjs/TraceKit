@@ -12,6 +12,12 @@ export interface SimpleLoggerOptions {
   colorize?: boolean;
 }
 
+export interface AdvancedLoggerOptions {
+  path?: string
+}
+
+export type LoggerOptions = SimpleLoggerOptions & AdvancedLoggerOptions;
+
 export type JSONValue =
   | string
   | number
