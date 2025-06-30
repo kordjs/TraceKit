@@ -1,2 +1,1 @@
-export * from "./Loggers/logger";
-export * from "./Loggers/simple-logger";
+export const version = "1.0.0" // Sample

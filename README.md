@@ -1,1 +1,1 @@
-# A simple Logger.
+# ✨ @kordjs/logger - 2.0.3

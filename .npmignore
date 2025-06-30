@@ -2,3 +2,6 @@ src/
 tests/
 tsup.config.ts
 tsconfig.json 
+.vscode/
+CHANGELOG.md
+README.md
