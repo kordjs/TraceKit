@@ -5,3 +5,8 @@ tsconfig.json
 .vscode/
 CHANGELOG.md
 README.md
+.prettierignore
+.prettierrc
+.github/
+LICENSE
+eslint.config.mjs

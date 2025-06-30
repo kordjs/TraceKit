@@ -1,6 +1,6 @@
 {
   "name": "@kordjs/logger",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A Logger.",
   "main": "dist/index.js",
   "exports": {
@@ -13,8 +13,9 @@
     "build": "tsup",
     "pretty": "prettier --write .",
     "lint": "eslint",
-    "prepare": "npm run pretty && npm run lint && npm run build",
-    "start": "npm run build && clear && node ./tests/.node"
+    "prepare": "npm run pretty && npm run lint && npm run tz:gen && npm run build",
+    "start": "npm run build && clear && node ./tests/.node",
+    "tz:gen": "node scripts/generate-tz.js"
   },
   "repository": {
     "type": "git",
@@ -39,5 +40,8 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.1",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@kordjs/utils": "^1.2.1"
   }
 }
