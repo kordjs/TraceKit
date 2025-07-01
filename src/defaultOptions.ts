@@ -1,7 +1,8 @@
 import { LoggerOptions } from './lib/Logger';
+import { TimezoneKey } from './tz-data/zones';
 
 export const DefaultOptions: LoggerOptions = {
-  timezone: "Asia/Tokyo",
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as TimezoneKey,
   display: {
     timestamp: true,
     level: true,

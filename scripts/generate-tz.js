@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 const COMMENT = `/**\n * Version: ${version}\n * This file is not to be edited.\n*/${"\n".repeat(5)}`;
-const ZONES_JSON_PATH = path.join(__dirname, "../src/timezone.json");
-const OUTPUT_DIR = path.join(__dirname, "../src/generated");
+const ZONES_JSON_PATH = path.join(__dirname, "../data/timezones.json");
+const OUTPUT_DIR = path.join(__dirname, "../src/tz-data");
 const zones = JSON.parse(fs.readFileSync(ZONES_JSON_PATH, "utf8"));
 
 const jsEntries = zones

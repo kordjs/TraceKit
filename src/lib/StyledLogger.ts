@@ -17,7 +17,7 @@ export class StyledLogger {
     if (!this.options.display?.timestamp) placeholder = placeholder.replace('{timestamp}', '');
 
     const content = placeholder
-      .replace('{timestamp}', `${this._date('Asia/Tokyo')} `)
+      .replace('{timestamp}', `${colors.red(this._date('Asia/Tokyo'))} `)
       .replace('{level}', 'INFO ')
       .replace('{args}', args.join(' '));
 

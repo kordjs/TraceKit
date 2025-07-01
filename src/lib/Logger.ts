@@ -2,7 +2,7 @@ import { ErrorCodes } from '@kordjs/utils';
 import { DefaultOptions } from '../defaultOptions';
 import { StyledLogger } from './StyledLogger';
 import { KordJSTypeError } from '../errors';
-import { TimezoneKey } from '../generated/zones';
+import { TimezoneKey } from '../tz-data/zones';
 
 interface DisplayOptions {
   timestamp: boolean;
