@@ -7,8 +7,6 @@
     <a href="https://www.npmjs.com/package/@kordjs/logger">
       <img src="https://img.shields.io/npm/v/@kordjs/logger?style=flat-square" alt="npm version" />
     </a>
-    <a href="https://github.com/kordjs/logger/actions/workflows/npm-publish.yml">
-      <img src="https://github.com/kordjs/logger/actions/workflows/npm-publish.yml/badge.svg" alt="CI" />
     </a>
     <a href="https://github.com/kordjs/logger/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/kordjs/logger?style=flat-square" alt="license" />
@@ -34,6 +32,16 @@
 ```sh
 npm install @kordjs/logger
 ```
+
+## **Installing Development Versions**
+
+> Installing dev versions (e.g., from the `dev` branch) is risky and not recommended for production use. Dev versions may contain unfinished features, breaking changes, or unstable APIs that could break your application. Always prefer stable releases from npm unless you are actively developing or testing new features.  
+
+**To install a dev version:**  
+```sh
+npm install kordjs/logger@dev
+```
+> **Development Version Issues?:** Create a issue, with detailed information on the error/bug.
 
 ---
 

@@ -10,3 +10,5 @@ README.md
 .github/
 LICENSE
 eslint.config.mjs
+data/
+scripts/
