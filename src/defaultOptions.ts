@@ -1,8 +1,12 @@
-import { LoggerOptions } from './lib/Logger';
+import { LoggerOptions, TimeFormats } from './lib/Logger';
 import { TimezoneKey } from './tz-data/zones';
 
 export const DefaultOptions: LoggerOptions = {
-  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as TimezoneKey,
+  time: {
+    zone: Intl.DateTimeFormat().resolvedOptions().timeZone as TimezoneKey,
+    format: TimeFormats.Date
+  },
+
   display: {
     timestamp: true,
     level: true,

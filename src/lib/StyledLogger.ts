@@ -1,13 +1,17 @@
 import { colors } from '@kordjs/utils';
 import { LoggerOptions } from './Logger';
 import { ErrorCodes, KordJSError } from '../errors';
+import { Utility } from './Utility';
 
 export class StyledLogger {
   private options: LoggerOptions;
+  private utility: Utility;
 
   public constructor(options: LoggerOptions) {
-    this.options = options;
     if (!options.display?.styling) throw new KordJSError(ErrorCodes.DisabledStyling);
+
+    this.options = options;
+    this.utility = new Utility(options);
   }
 
   public info(...args: unknown[]) {
@@ -17,27 +21,10 @@ export class StyledLogger {
     if (!this.options.display?.timestamp) placeholder = placeholder.replace('{timestamp}', '');
 
     const content = placeholder
-      .replace('{timestamp}', `${colors.red(this._date('Asia/Tokyo'))} `)
+      .replace('{timestamp}', `${colors.red(this.utility.date.format())} `)
       .replace('{level}', 'INFO ')
-      .replace('{args}', args.join(' '));
+      .replace('{args}', this.utility.string.stringifyArguments(args));
 
     console.info(content);
-  }
-
-  private _date(_tz: string) {
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      timeZone: _tz,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
-
-    const parts = formatter.formatToParts(new Date());
-    const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
-    const date = new Date(Date.UTC(get('year'), get('month') - 1, get('day')));
-    return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
   }
 }

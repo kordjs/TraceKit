@@ -1,1 +1,1 @@
-export { Logger } from './lib/Logger';
+export { Logger, TimeFormats } from './lib/Logger';

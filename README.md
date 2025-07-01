@@ -35,12 +35,14 @@ npm install @kordjs/logger
 
 ## **Installing Development Versions**
 
-> Installing dev versions (e.g., from the `dev` branch) is risky and not recommended for production use. Dev versions may contain unfinished features, breaking changes, or unstable APIs that could break your application. Always prefer stable releases from npm unless you are actively developing or testing new features.  
+> Installing dev versions (e.g., from the `dev` branch) is risky and not recommended for production use. Dev versions may contain unfinished features, breaking changes, or unstable APIs that could break your application. Always prefer stable releases from npm unless you are actively developing or testing new features.
 
-**To install a dev version:**  
+**To install a dev version:**
+
 ```sh
 npm install kordjs/logger@dev
 ```
+
 > **Development Version Issues?:** Create a issue, with detailed information on the error/bug.
 
 ---
@@ -69,26 +71,26 @@ logger.styled.info('Hello from KordJS Logger!');
 `new Logger(options?: LoggerOptions)`
 
 - `options.timezone`
-   - [TimezoneKey](https://github.com)
-   - Default: System Timezone
+  - [TimezoneKey](https://github.com)
+  - Default: System Timezone
 - `options.dispay`
-   - [DisplayOptions](https://github.com)
-   - `display.timezone`
-      - Boolean
-      - Default: `true`
-   - `display.level`
-      - Boolean
-      - Default; `true`
-   - `display.styling`
-      - Boolean
-      - Default: `true`
+  - [DisplayOptions](https://github.com)
+  - `display.timezone`
+    - Boolean
+    - Default: `true`
+  - `display.level`
+    - Boolean
+    - Default; `true`
+  - `display.styling`
+    - Boolean
+    - Default: `true`
 
 `Logger.styled` returns `StyledLogger`
 
-- `StyledLogger` instance with colorized  output.
-     - **Methods:**
-         - `.debug(...args: unknown[])`
-         - `.warn(...args: unknown[])`
+- `StyledLogger` instance with colorized output.
+  - **Methods:**
+    - `.debug(...args: unknown[])`
+    - `.warn(...args: unknown[])`
 
 ---
 
