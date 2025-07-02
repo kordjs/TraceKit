@@ -1,8 +1,7 @@
-import { ErrorCodes } from '@kordjs/utils';
 import { DefaultOptions } from '../defaultOptions';
 import { StyledLogger } from './StyledLogger';
-import { KordJSTypeError } from '../errors';
 import { TimezoneKey } from '../tz-data/zones';
+import { KordJSTypeError } from '../errors';
 
 export enum TimeFormats {
   Compact = 'D/M/YY',
@@ -30,7 +29,7 @@ export class Logger {
 
   public constructor(options?: LoggerOptions) {
     if (options && typeof options !== 'object')
-      throw new KordJSTypeError(ErrorCodes.NoTypeMatch, 'typeof LoggerOptions: {}', typeof options);
+      throw new KordJSTypeError('TYPE_NO_MATCH', 'object | LoggerOptions', typeof options);
 
     this.options = {
       ...DefaultOptions,

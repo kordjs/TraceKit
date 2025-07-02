@@ -1,6 +1,6 @@
 import { colors } from '@kordjs/utils';
 import { LoggerOptions } from './Logger';
-import { ErrorCodes, KordJSError } from '../errors';
+import { KordJSError } from '../errors';
 import { Utility } from './Utility';
 
 export class StyledLogger {
@@ -8,7 +8,7 @@ export class StyledLogger {
   private utility: Utility;
 
   public constructor(options: LoggerOptions) {
-    if (!options.display?.styling) throw new KordJSError(ErrorCodes.DisabledStyling);
+    if (!options.display?.styling) throw new KordJSError('STYLED_LOGGER_DISABLED');
 
     this.options = options;
     this.utility = new Utility(options);
