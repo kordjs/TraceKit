@@ -23,7 +23,7 @@ export class StyledLogger {
     const content = placeholder
       .replace('{timestamp}', `${colors.red(this.utility.date.format())} `)
       .replace('{level}', 'INFO ')
-      .replace('{args}', this.utility.string.stringifyArguments(args));
+      .replace('{args}', this.utility.string.stringifyArguments(...args));
 
     console.info(content);
   }
