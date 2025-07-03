@@ -21,6 +21,8 @@ interface DisplayOptions {
   level?: boolean;
   /** Whether to enable styled logging. */
   styling?: boolean;
+  /** Whether to display icons (displayed in StyledLogger) */
+  icons?: boolean;
 }
 
 /**

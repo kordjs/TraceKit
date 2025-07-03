@@ -3,6 +3,8 @@ import { LoggerOptions } from './Logger';
 import { KordJSError } from '../errors';
 import { Utility } from './Utility';
 
+type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
+
 /**
  * A logger class that outputs styled log messages based on provided options.
  */
@@ -51,7 +53,7 @@ export class StyledLogger {
    * @param args - Arguments to log.
    */
   public error(...args: unknown[]) {
-    console.error(this._log("ERROR"), ...args);
+    console.error(this._log("ERROR", ...args));
   }
 
   /**
@@ -61,13 +63,22 @@ export class StyledLogger {
    * @returns The formatted log message string.
    * @private
    */
-  private _log(lvl: string, ...args: unknown[]) {
-    let placeholder = '{timestamp}{level}{args}';
+  private _log(lvl: LogLevel, ...args: unknown[]) {
+    let placeholder = '{icon}{timestamp}{level}{args}';
 
     if (!this.options.display?.level) placeholder = placeholder.replace('{level}', '');
     if (!this.options.display?.timestamp) placeholder = placeholder.replace('{timestamp}', '');
+    if (!this.options.display?.icons) placeholder = placeholder.replace('{icon}', '');
+
+    const IconForLevels: Record<LogLevel, keyof typeof colors.icons> = {
+      DEBUG: "star",
+      INFO: "info",
+      WARN: "warn",
+      ERROR: "cross"
+    };
 
     const content = placeholder
+      .replace("{icon}", `${colors.icons[IconForLevels[lvl]]()}`)
       .replace('{timestamp}', `${colors.red(this.utility.date.format())} `)
       .replace('{level}', `${lvl} `)
       .replace('{args}', this.utility.string.stringifyArguments(...args));

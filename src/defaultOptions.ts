@@ -10,6 +10,7 @@ export const DefaultOptions: LoggerOptions = {
   display: {
     timestamp: true,
     level: true,
-    styling: true
+    styling: true,
+    icons: true
   }
 };
