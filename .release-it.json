@@ -1,19 +1,31 @@
 {
+  "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+
   "git": {
     "commitMessage": "chore(release): v${version}",
-    "tagName": "${version}",
-    "requireCleanWorkingDir": true
+    "tag": true,
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": true,
+    "requireCommits": true,
+    "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
   },
+
   "npm": {
     "publish": false
   },
+
   "github": {
-    "release": true
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "conventionalcommits",
-      "infile": "CHANGELOG.md"
+    "tokenRef": "GITHUB_TOKEN",
+    "release": true,
+    "releaseName": "v${version}",
+    "comments": {
+      "submit": true,
+      "issue": ":rocket: _This issue has been resolved in v${version}. See [${releaseName}](${releaseUrl}) for release notes._",
+      "pr": ":rocket: _This pull request is included in v${version}. See [${releaseName}](${releaseUrl}) for release notes._"
     }
+  },
+
+  "hooks": {
+    "after:bump": "npx auto-changelog -p"
   }
 }
