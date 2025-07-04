@@ -4,7 +4,13 @@ import { TimezoneKey } from '../tz-data/zones';
 import { KordJSTypeError } from '../errors';
 
 /**
- * Enum representing supported time formats.
+ * TimeFormats represents formats of time.
+ * 
+ * @remarks
+ * Compact - Short format
+ * Date - Full Date
+ * 
+ * @public
  */
 export enum TimeFormats {
   Compact = 'D/M/YY',
@@ -12,58 +18,81 @@ export enum TimeFormats {
 }
 
 /**
- * Options for controlling log display features.
+ * Options to control the display of log output.
+ *
+ * @property timestamp - Whether to display timestamps in logs.
+ * @property level - Whether to display log levels.
+ * @property styling - Whether to enable styled logging.
+ * @property icons - Whether to display icons (displayed in StyledLogger).
  */
-interface DisplayOptions {
-  /** Whether to display timestamps in logs. */
+export interface DisplayOptions {
   timestamp?: boolean;
-  /** Whether to display log levels. */
   level?: boolean;
-  /** Whether to enable styled logging. */
   styling?: boolean;
-  /** Whether to display icons (displayed in StyledLogger) */
   icons?: boolean;
 }
 
 /**
- * Options for configuring time formatting and timezone.
+ * Options for configuring timestamp formatting in the logger.
+ *
+ * @property zone - The timezone key to use for timestamps.
+ * @property format - The time format to use.
  */
-interface TimeOptions {
-  /** The timezone key to use for timestamps. */
+export interface TimeOptions {
   zone?: TimezoneKey;
-  /** The time format to use. */
   format?: TimeFormats;
 }
 
 /**
- * Options for configuring log file transport.
+ * Options for configuring a file transport in the logger.
+ *
+ * @property enabled - Whether file transport is enabled.
+ * @property file - The file path for log output.
  */
-interface TransportOptions {
-  /** Whether file transport is enabled. */
+export interface TransportOptions {
   enabled: boolean;
-  /** The file path for log output. */
   file: string;
 }
 
 /**
- * Main logger configuration options.
+ * Configuration options for the Logger.
+ *
+ * @property display - Options related to how log messages are displayed.
+ * @property transport - Options for configuring file transport of log messages.
+ * @property time - Options for formatting timestamps in log messages.
  */
 export interface LoggerOptions {
-  /** Display-related options. */
   display?: DisplayOptions;
-  /** File transport options. */
   transport?: TransportOptions;
-  /** Time formatting options. */
   time?: TimeOptions;
 }
 
+/**
+ * Represents a configurable logger for outputting messages.
+ *
+ * @remarks
+ * The `Logger` class provides a flexible logging mechanism with customizable options.
+ * You can extend its functionality or use the {@link Logger.styled | styled} getter for formatted output.
+ *
+ * @example
+ * ```typescript
+ * const logger = new Logger();
+ * logger.info('Hello, world!');
+ * ```
+ *
+ * @see {@link LoggerOptions}
+ * @see {@link StyledLogger}
+ */
 export class Logger {
   private options: LoggerOptions;
 
   /**
-   * Creates a new Logger instance.
-   * @param options - Logger configuration options.
-   * @throws {KordJSTypeError} If options is not an object.
+   * Creates a new instance of the Logger class.
+   *
+   * @param {LoggerOptions} options - Optional configuration object for the logger. If provided, must be of type `object` or `LoggerOptions`.
+   * @throws {KordJSTypeError} If the `options` parameter is not an object.
+   *
+   * Merges the provided options with the default logger options.
    */
   public constructor(options?: LoggerOptions) {
     if (options && typeof options !== 'object')
@@ -76,7 +105,13 @@ export class Logger {
   }
 
   /**
-   * Returns a styled logger instance using the current options.
+   * Returns a new instance of {@link StyledLogger} configured with the current logger options.
+   * 
+   * @remarks
+   * This getter provides access to a styled logger, which offer formatted output.
+   * Each call creates a new {@link StyledLogger} instance using the current options.
+   *
+   * @returns {StyledLogger} A styled logger instance with the current configuration.
    */
   public get styled() {
     return new StyledLogger(this.options);
