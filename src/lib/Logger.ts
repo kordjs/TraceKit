@@ -79,6 +79,6 @@ export class Logger {
    * Returns a styled logger instance using the current options.
    */
   public get styled() {
-    return new StyledLogger(this.options)
+    return new StyledLogger(this.options);
   }
 }
