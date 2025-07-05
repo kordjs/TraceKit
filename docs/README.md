@@ -46,15 +46,20 @@ npm install @kordjs/logger/@2.1.2
 ## Usage
 
 ```ts
-import { Logger } from '@kordjs/logger';
+import { Logger, TimeFormats } from '@kordjs/logger';
 import { doOperation } from '@lib/operation';
 
 const logger = new Logger({
-  timezone: 'Asia/Tokyo',
+  time: {
+    zone: "Asia/Tokyo",
+    format: TimeFormats.Compact
+  }
+
   display: {
     timestamp: true,
     level: true,
-    styling: true
+    styling: true,
+    icons: true
   }
 });
 
@@ -81,7 +86,7 @@ function main() {
 `interface LoggerOptions {}`
 
 - `options.dispay`
-  - [DisplayOptions](typedoc/interfaces/DisplayOptions.html)
+  - [DisplayOptions](https://github.com/kordjs/logger/blob/49b0c3e52326eabc400d162d72d2c8d11b68a91a/src/lib/Logger.ts#L30)
   - `display.timezone`
     - _Wether to display the time_
     - Type: `Boolean`
@@ -91,11 +96,11 @@ function main() {
     - Type: `Boolean`
     - Default; `true`
   - `display.styling`
-    - _Wether to use_ [`StyledLogger`](/typedoc/classes/StyledLogger.html)
+    - _Wether to use_ [`StyledLogger`](https://github.com/kordjs/logger/blob/49b0c3e52326eabc400d162d72d2c8d11b68a91a/src/lib/StyledLogger.ts#L11)
     - `Boolean`
     - Default: `true`
 - `options.transport` (experimental)
-  - [TransportOptions](/typedoc/interfaces/TransportOptions.html)
+  - [TransportOptions](https://github.com/kordjs/logger/blob/49b0c3e52326eabc400d162d72d2c8d11b68a91a/src/lib/Logger.ts#L58)
   - `transport.enabled`
     - _Enable or disable transport_
     - Type: `Boolean`
@@ -105,13 +110,13 @@ function main() {
     - Type: `String`
     - Default: `undefined`
 - `options.time`
-  - [TimeOptions](/typedoc/interfaces/TimeOptions.html)
+  - [TimeOptions](https://github.com/kordjs/logger/blob/49b0c3e52326eabc400d162d72d2c8d11b68a91a/src/lib/Logger.ts#L45)
   - `time.zone`
     - _Adjust the timezone_
-    - Type: [`TimezoneKey`](/typedoc/types/TimezoneKey.html)
+    - Type: [`TimezoneKey`](docs/typedoc/types/TimezoneKey.html)
   - `time.format`
     - _Format the timezone_
-    - Type: [`TimeFormats`](/typedoc/enums/TimeFormats.html)
+    - Type: [`TimeFormats`](docs/typedoc/enums/TimeFormats.html)
 
 ---
 

@@ -12,106 +12,57 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/docsify-changelog-plugin@latest/dist/style.css"
-    />
-    <link
-      rel="stylesheet"
       href="htpps://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
     />
   </head>
   <body>
+    <div id="app"></div>
     <script>
       (function () {
-        const cleanHash = () => {
-          const { pathname, search, hash } = window.location;
-          if (hash.startsWith('#/')) {
-            const cleanUrl = pathname + search + hash.slice(1);
-            history.replaceState(null, '', cleanUrl);
+        const forceReloadIfTypedoc = (rawUrl) => {
+          if (typeof rawUrl !== 'string') return;
+          const cleanedUrl = rawUrl.startsWith('#/') ? rawUrl.slice(1) : rawUrl;
+
+          if (cleanedUrl.startsWith('/docs/typedoc')) {
+            window.location.assign(cleanedUrl);
           }
         };
 
-        const interceptLinkClicks = () => {
-          document.body.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+        document.body.addEventListener('click', (e) => {
+          const link = e.target.closest('a');
+          if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
 
-            const href = link.getAttribute('href');
-            if (href && href.startsWith('#/')) {
-              e.preventDefault();
-              const cleanHref = href.slice(1);
-              history.pushState(null, '', cleanHref);
-              window.dispatchEvent(new Event('popstate'));
-            }
-          });
+          const href = link.getAttribute('href');
+          if (!href) return;
+
+          forceReloadIfTypedoc(href);
+        });
+
+        const hijackHistory = (method) => {
+          const original = history[method];
+          history[method] = function (...args) {
+            const url = args[2];
+            forceReloadIfTypedoc(url);
+            return original.apply(this, args);
+          };
         };
 
-        const observeHashChanges = () => {
-          const originalPushState = history.pushState;
-          const originalReplaceState = history.replaceState;
+        hijackHistory('pushState');
+        hijackHistory('replaceState');
 
-          const handler = () => {
-            cleanHash();
-          };
-
-          history.pushState = function (...args) {
-            originalPushState.apply(this, args);
-            handler();
-          };
-
-          history.replaceState = function (...args) {
-            originalReplaceState.apply(this, args);
-            handler();
-          };
-
-          window.addEventListener('hashchange', handler);
-          window.addEventListener('popstate', handler);
-        };
-
-        const handleTypedocNavigationFix = () => {
-          const refreshedKey = '__typedoc_refreshed__';
-          const isTypedoc = location.pathname.startsWith('/docs/typedoc');
-
-          if (isTypedoc && !sessionStorage.getItem(refreshedKey)) {
-            sessionStorage.setItem(refreshedKey, 'true');
-            location.reload(); // reload once to fix broken styles
-          } else if (!isTypedoc) {
-            sessionStorage.removeItem(refreshedKey);
-          }
-        };
-
-        cleanHash(); // clean on load
-        interceptLinkClicks(); // intercept clicks
-        observeHashChanges(); // watch hash/reactivity
-        handleTypedocNavigationFix();
+        window.addEventListener('popstate', () => {
+          forceReloadIfTypedoc(window.location.pathname);
+        });
       })();
     </script>
 
-    <div id="app"></div>
     <script>
       window.$docsify = {
-        routerMode: 'history',
         name: '@kordjs/logger',
-        repo: 'kordjs/logger',
-        coverpage: false,
-        relativePath: true,
-        loadNavbar: false,
-        changelog: 'https://raw.githubusercontent.com/kordjs/logger/refs/heads/main/CHANGELOG.md',
-        progress: {
-          position: 'top',
-          color: 'var(--theme-color,#42b983)',
-          height: '3px'
-        },
-        timeUpdater: {
-          text: '> Last Update At: {docsify-updated}',
-          formatUpdated: '{YYYY}/{MM}/{DD}',
-          whereToPlace: 'bottom'
-        }
+        repo: 'kordjs/logger'
       };
     </script>
     <!-- Docsify v4 -->
-    <script src="https:////cdn.jsdelivr.net/npm/docsify@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-changelog-plugin@latest/dist/index.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   </body>
 </html>
