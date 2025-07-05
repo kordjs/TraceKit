@@ -7,7 +7,7 @@
     "tagName": "v${version}",
     "requireCleanWorkingDir": true,
     "requireCommits": true,
-    "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/cookpete/auto-changelog/refs/heads/master/templates/conventional.hbs"
+    "changelog": "npx auto-changelog --stdout --commit-limit 20 -u --template https://raw.githubusercontent.com/cookpete/auto-changelog/refs/heads/master/templates/conventional.hbs"
   },
 
   "npm": {
