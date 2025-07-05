@@ -1,6 +1,6 @@
 {
   "name": "@kordjs/logger",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Advanced, flexible, and type-safe logger for Node.js projects.",
   "main": "dist/index.js",
   "exports": {
