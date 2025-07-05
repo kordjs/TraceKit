@@ -1,49 +1,23 @@
 import { LoggerOptions } from './Logger';
 
-/**
- * Supported date/time format tokens.
- */
 type FormatToken = 'Y' | 'M' | 'D' | 'H' | 'm' | 's';
-
-/**
- * Supported styles for date/time formatting.
- */
 type FormatStyle = '2-digit' | 'numeric';
 
 export class Utility {
   private options: LoggerOptions;
 
-  /**
-   * Creates a new Utility instance.
-   * @param options - Logger configuration options.
-   */
   public constructor(options: LoggerOptions) {
     this.options = options;
   }
 
-  /**
-   * Provides string utility functions.
-   */
   public get string() {
     return {
-      /**
-       * Converts arguments to a formatted string for logging.
-       * @param args - Arguments to stringify.
-       * @returns {string} The stringified arguments.
-       */
       stringifyArguments: (...args: unknown[]) => this._string_format_stringifyArgs(args)
     };
   }
 
-  /**
-   * Provides date utility functions.
-   */
   public get date() {
     return {
-      /**
-       * Formats the current date/time according to logger options.
-       * @returns {string} The formatted date string.
-       */
       format: () => {
         const formatter = Intl.DateTimeFormat('en-US', {
           timeZone: this.options.time?.zone,
@@ -56,12 +30,6 @@ export class Utility {
     };
   }
 
-  /**
-   * Converts an array of arguments to a formatted string.
-   * @param args - Arguments to stringify.
-   * @returns The stringified arguments.
-   * @private
-   */
   private _string_format_stringifyArgs(args: unknown[]) {
     return args
       .map((arg) => {
@@ -106,12 +74,6 @@ export class Utility {
       .join(' ');
   }
 
-  /**
-   * Formats date parts into a string based on the configured format.
-   * @param {Intl.DateTimeFormat} parts - Date parts from Intl.DateTimeFormat.
-   * @returns {string} The formatted date string.
-   * @private
-   */
   private _formatter_formatFromParts(parts: Intl.DateTimeFormatPart[]) {
     const map = Object.fromEntries(
       parts.filter((p) => p.type !== 'literal').map((p) => [p.type, p.value])
@@ -152,11 +114,6 @@ export class Utility {
     );
   }
 
-  /**
-   * Extracts formatting data from the configured time format.
-   * @returns An object mapping format tokens to their styles.
-   * @private
-   */
   private _formatter_data() {
     const result: Partial<Record<FormatToken, FormatStyle>> = {};
     const matches = (this.options.time?.format ?? '').match(/([A-Za-z])\1*/g);
@@ -177,12 +134,6 @@ export class Utility {
     return result;
   }
 
-  /**
-   * Converts format data into Intl.DateTimeFormatOptions.
-   * @param format - Format data mapping tokens to styles.
-   * @returns Intl.DateTimeFormatOptions for formatting dates.
-   * @private
-   */
   private _formatter_options(format: Partial<Record<FormatToken, FormatStyle>>) {
     const result: Intl.DateTimeFormatOptions = {};
 

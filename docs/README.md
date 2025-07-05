@@ -81,7 +81,7 @@ function main() {
 `interface LoggerOptions {}`
 
 - `options.dispay`
-  - [DisplayOptions](docs/typedoc/interfaces/DisplayOptions.html)
+  - [DisplayOptions](typedoc/interfaces/DisplayOptions.html)
   - `display.timezone`
     - _Wether to display the time_
     - Type: `Boolean`
@@ -91,11 +91,11 @@ function main() {
     - Type: `Boolean`
     - Default; `true`
   - `display.styling`
-    - _Wether to use_ [`StyledLogger`](docs/typedoc/classes/StyledLogger.html)
+    - _Wether to use_ [`StyledLogger`](/typedoc/classes/StyledLogger.html)
     - `Boolean`
     - Default: `true`
 - `options.transport` (experimental)
-  - [TransportOptions](docs/typedoc/interfaces/TransportOptions.html)
+  - [TransportOptions](/typedoc/interfaces/TransportOptions.html)
   - `transport.enabled`
     - _Enable or disable transport_
     - Type: `Boolean`
@@ -105,13 +105,13 @@ function main() {
     - Type: `String`
     - Default: `undefined`
 - `options.time`
-  - [TimeOptions](docs/typedoc/interfaces/TimeOptions.html)
+  - [TimeOptions](/typedoc/interfaces/TimeOptions.html)
   - `time.zone`
     - _Adjust the timezone_
-    - Type: [`TimezoneKey`](docs/typedoc/types/TimezoneKey.html)
+    - Type: [`TimezoneKey`](/typedoc/types/TimezoneKey.html)
   - `time.format`
     - _Format the timezone_
-    - Type: [`TimeFormats`](docs/typedoc/enums/TimeFormats.html)
+    - Type: [`TimeFormats`](/typedoc/enums/TimeFormats.html)
 
 ---
 

@@ -5,12 +5,12 @@ import { KordJSTypeError } from '../errors';
 
 /**
  * TimeFormats represents formats of time.
- * 
+ *
  * @remarks
- * Compact - Short format
- * Date - Full Date
- * 
- * @public
+ * - Compact - Short Date Format (e.g: 1/2/2007)
+ * - Date - Full Date Format (e.g: 12/09/2020)
+ *
+ * @see {@link TimeOptions}
  */
 export enum TimeFormats {
   Compact = 'D/M/YY',
@@ -24,6 +24,8 @@ export enum TimeFormats {
  * @property level - Whether to display log levels.
  * @property styling - Whether to enable styled logging.
  * @property icons - Whether to display icons (displayed in StyledLogger).
+ *
+ * @see {@link LoggerOptions}
  */
 export interface DisplayOptions {
   timestamp?: boolean;
@@ -37,6 +39,8 @@ export interface DisplayOptions {
  *
  * @property zone - The timezone key to use for timestamps.
  * @property format - The time format to use.
+ *
+ * @see {@link LoggerOptions}
  */
 export interface TimeOptions {
   zone?: TimezoneKey;
@@ -48,6 +52,8 @@ export interface TimeOptions {
  *
  * @property enabled - Whether file transport is enabled.
  * @property file - The file path for log output.
+ *
+ * @see {@link LoggerOptions}
  */
 export interface TransportOptions {
   enabled: boolean;
@@ -106,7 +112,7 @@ export class Logger {
 
   /**
    * Returns a new instance of {@link StyledLogger} configured with the current logger options.
-   * 
+   *
    * @remarks
    * This getter provides access to a styled logger, which offer formatted output.
    * Each call creates a new {@link StyledLogger} instance using the current options.
