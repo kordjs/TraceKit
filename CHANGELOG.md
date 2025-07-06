@@ -1,4 +1,24 @@
-## Changelog
+# Changelog
+
+## 2.2.0 (2025-07-06)
+
+### Features
+
+* add npm publish workflow for development and release versions ([3b1ebfb](https://github.com/kordjs/logger/commit/3b1ebfbacfb8aafed395811c2ffa8f719de2c866))
+* **docs:** Implemented TypeDoc ([b298382](https://github.com/kordjs/logger/commit/b29838254bde3bfbf841a14e6cbfd663da5b6b47))
+* enhance logger with timezone support and formatting options ([c1e7610](https://github.com/kordjs/logger/commit/c1e7610cd68e86244af5a3757bb742679a464d27))
+* implement Logger and SimpleLogger classes with enhanced options and methods ([6e904c8](https://github.com/kordjs/logger/commit/6e904c845221e17000e796ad3353da0a269217df))
+* initialize logger package with SimpleLogger implementation ([9b9cae7](https://github.com/kordjs/logger/commit/9b9cae77dc097cfc4c246d5aa9806c88e04fdeab))
+
+### Bug Fixes
+
+* **#2:** Issue displaying Error & Objects. ([992f2a2](https://github.com/kordjs/logger/commit/992f2a24ac233f424a173e0a03fca3051a5bba57)), closes [#2](https://github.com/kordjs/logger/issues/2)
+* downgrade version to 2.0.3 and update description ([0890411](https://github.com/kordjs/logger/commit/08904111f8ace5c4476b13d7d27caec2d1182867))
+* github workflow alert (5) ([9adfb77](https://github.com/kordjs/logger/commit/9adfb777f448b0a281efbe3d4dd91afe99b63c11))
+* release-it to work with the project. ([0cf5e2a](https://github.com/kordjs/logger/commit/0cf5e2a3cf64a1090df914ed697e588be20d2814))
+* update tagName format in release configuration ([b590810](https://github.com/kordjs/logger/commit/b590810f876fcfd24702dddbb2c9271809cc0e65))
+
+#
 
 ### [v2.1.5](https://github.com/kordjs/logger/compare/v2.1.4...v2.1.5) - 5 July 2025
 
