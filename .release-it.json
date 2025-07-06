@@ -6,8 +6,7 @@
     "tag": true,
     "tagName": "v${version}",
     "requireCleanWorkingDir": true,
-    "requireCommits": true,
-    "changelog": "npx auto-changelog --stdout --commit-limit 20 -u --template https://raw.githubusercontent.com/cookpete/auto-changelog/refs/heads/master/templates/conventional.hbs"
+    "changelog": "npx auto-changelog --stdout"
   },
 
   "npm": {
@@ -17,15 +16,10 @@
   "github": {
     "tokenRef": "GITHUB_TOKEN",
     "release": true,
-    "releaseName": "v${version}",
-    "comments": {
-      "submit": true,
-      "issue": ":rocket: _This issue has been resolved in v${version}. See [${releaseName}](${releaseUrl}) for release notes._",
-      "pr": ":rocket: _This pull request is included in v${version}. See [${releaseName}](${releaseUrl}) for release notes._"
-    }
+    "releaseName": "v${version}"
   },
 
   "hooks": {
-    "after:bump": "npx auto-changelog -p"
+    "after:bump": "npx auto-changelog"
   }
 }
