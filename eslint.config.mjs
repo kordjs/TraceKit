@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist/', 'node_modules/', 'tests/.node/', 'scripts/']),
+  globalIgnores(['dist/', 'node_modules/', 'tests/.node/', 'scripts/', 'docs/']),
   {
     files: ['**/*.{ts,mts,cts}'],
     linterOptions: {

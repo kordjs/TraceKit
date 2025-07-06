@@ -1,5 +1,0 @@
-{
-  "output": "CHANGELOG.md",
-  "template": "https://raw.githubusercontent.com/cookpete/auto-changelog/refs/heads/master/templates/conventional.hbs",
-  "commitLimit": false
-}

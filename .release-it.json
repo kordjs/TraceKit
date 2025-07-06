@@ -1,25 +1,23 @@
 {
   "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
-
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "conventionalcommits",
+      "infile": "CHANGELOG.md",
+      "changelogCommand": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0 --from 2.0.1"
+    }
+  },
   "git": {
     "commitMessage": "chore(release): v${version}",
-    "tag": true,
     "tagName": "v${version}",
-    "requireCleanWorkingDir": true,
-    "changelog": "npx auto-changelog --stdout --starting-version 2.1.0"
+    "requireCleanWorkingDir": true
   },
-
-  "npm": {
-    "publish": false
-  },
-
   "github": {
-    "tokenRef": "GITHUB_TOKEN",
     "release": true,
-    "releaseName": "v${version}"
+    "releaseName": "v${version}",
+    "tokenRef": "GITHUB_TOKEN"
   },
-
-  "hooks": {
-    "after:bump": "npx auto-changelog --starting-version 2.1.0"
+  "npm": {
+    "publish": true
   }
 }
