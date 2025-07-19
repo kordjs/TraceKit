@@ -2,7 +2,7 @@
  * Basic usage examples for TraceKit (compiled version)
  */
 
-const { logger, createLogger, info, warn, error, configure } = require('./dist/index.js')
+const { logger, createLogger, info, warn, error, configure } = require('../dist/index.js')
 
 console.log('=== TraceKit Basic Usage Examples ===\n')
 
