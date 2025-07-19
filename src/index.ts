@@ -34,6 +34,7 @@ export { formatTimestamp, getDisplayTimestamp, formatLevel } from './utils/forma
 
 // Create default logger instance
 import { Logger } from './core/logger'
+import { LogCallConfig, LoggerConfig } from './types'
 
 /**
  * Default logger instance
