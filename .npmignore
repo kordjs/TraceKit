@@ -1,0 +1,30 @@
+# Development files
+src/
+examples/
+*.js
+*.md
+!README.md
+
+# Build tools and config
+tsconfig.json
+tsup.config.js
+.eslintrc.js
+.prettierrc
+
+# Dependencies and locks  
+node_modules/
+yarn.lock
+package-lock.json
+
+# Testing
+test-runner.js
+test-remote.js
+final-showcase.js
+test_result.md
+
+# Development documentation
+DEVELOPMENT.md
+
+# Git
+.git/
+.gitignore
