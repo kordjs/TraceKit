@@ -48,18 +48,18 @@ export function createLogger(config?: Parameters<typeof Logger.prototype.constru
 }
 
 // Convenience methods using default logger
-export const debug = (message: string, config?: Parameters<typeof logger.debug>[1]) => logger.debug(message, config)
-export const trace = (message: string, config?: Parameters<typeof logger.trace>[1]) => logger.trace(message, config)
-export const info = (message: string, config?: Parameters<typeof logger.info>[1]) => logger.info(message, config)
-export const success = (message: string, config?: Parameters<typeof logger.success>[1]) => logger.success(message, config)
-export const warn = (message: string, config?: Parameters<typeof logger.warn>[1]) => logger.warn(message, config)
-export const error = (message: string, config?: Parameters<typeof logger.error>[1]) => logger.error(message, config)
-export const fatal = (message: string, config?: Parameters<typeof logger.fatal>[1]) => logger.fatal(message, config)
+export const debug = (message: string, config?: LogCallConfig) => logger.debug(message, config)
+export const trace = (message: string, config?: LogCallConfig) => logger.trace(message, config)
+export const info = (message: string, config?: LogCallConfig) => logger.info(message, config)
+export const success = (message: string, config?: LogCallConfig) => logger.success(message, config)
+export const warn = (message: string, config?: LogCallConfig) => logger.warn(message, config)
+export const error = (message: string, config?: LogCallConfig) => logger.error(message, config)
+export const fatal = (message: string, config?: LogCallConfig) => logger.fatal(message, config)
 
 /**
  * Configure the default logger
  */
-export const configure = (config: Parameters<typeof logger.configure>[0]) => logger.configure(config)
+export const configure = (config: LoggerConfig) => logger.configure(config)
 
 /**
  * Get the default logger configuration
