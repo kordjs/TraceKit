@@ -1,318 +1,321 @@
-import { 
-  LogLevel, 
-  LoggerConfig, 
-  LogCallConfig, 
-  InternalLogEntry, 
-  Transport,
-  TransportType 
-} from '../types'
-import { formatTimestamp, formatSimpleMessage } from '../utils/formatter'
-import { BoxLogger } from '../utils/box'
-import { Colors, getLevelColor } from '../utils/colors'
-import { createTransport } from '../transports'
+import {
+        LogLevel,
+        LoggerConfig,
+        LogCallConfig,
+        InternalLogEntry,
+        Transport
+} from '../types';
+import { formatTimestamp, formatSimpleMessage } from '../utils/formatter';
+import { BoxLogger } from '../utils/box';
+import { getLevelColor } from '../utils/colors';
+import { createTransport } from '../transports';
 
 /**
  * Default configuration for the logger
  */
 const DEFAULT_CONFIG: Required<LoggerConfig> = {
-  namespace: 'System',
-  enableTimestamp: true,
-  enableColors: true,
-  defaultBoxed: false,
-  defaultBorderStyle: 'rounded',
-  defaultPadding: 1,
-  enableRemote: false,
-  remoteUrl: 'https://logsify.onrender.com/api/logs',
-  transportType: 'http',
-  remoteTimeout: 5000,
-  retryAttempts: 3,
-  authToken: '',
-  wsReconnectDelay: 5000,
-  wsMaxReconnectAttempts: 5,
-  fallbackToHttp: true,
-  minLevel: 'debug',
-  remoteMinLevel: 'info'
-}
+        namespace: 'System',
+        enableTimestamp: true,
+        enableColors: true,
+        defaultBoxed: false,
+        defaultBorderStyle: 'rounded',
+        defaultPadding: 1,
+        enableRemote: false,
+        remoteUrl: 'https://logsify.onrender.com/api/logs',
+        transportType: 'http',
+        remoteTimeout: 5000,
+        retryAttempts: 3,
+        authToken: '',
+        wsReconnectDelay: 5000,
+        wsMaxReconnectAttempts: 5,
+        fallbackToHttp: true,
+        minLevel: 'debug',
+        remoteMinLevel: 'info'
+};
 
 /**
  * Log level priorities for filtering
  */
 const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
-  debug: 0,
-  trace: 1,
-  info: 2,
-  success: 3,
-  warn: 4,
-  error: 5,
-  fatal: 6
-}
+        debug: 0,
+        trace: 1,
+        info: 2,
+        success: 3,
+        warn: 4,
+        error: 5,
+        fatal: 6
+};
 
 /**
  * Remote-enabled log levels
  */
-const REMOTE_LEVELS: Set<LogLevel> = new Set(['info', 'warn', 'error', 'fatal'])
+const REMOTE_LEVELS: Set<LogLevel> = new Set(['info', 'warn', 'error', 'fatal']);
 
 /**
  * Main Logger class
  */
 export class Logger {
-  private config: Required<LoggerConfig>
-  private transport: Transport | null = null
-  private boxLogger: BoxLogger
+        private config: Required<LoggerConfig>;
+        private transport: Transport | null = null;
+        private boxLogger: BoxLogger;
 
-  constructor(config: LoggerConfig = {}) {
-    this.config = { ...DEFAULT_CONFIG, ...config }
-    this.boxLogger = new BoxLogger(
-      this.config.defaultBorderStyle,
-      this.config.defaultPadding,
-      this.config.enableColors
-    )
-    
-    if (this.config.enableRemote) {
-      this.initializeTransport()
-    }
-  }
+        constructor(config: LoggerConfig = {}) {
+                this.config = { ...DEFAULT_CONFIG, ...config };
+                this.boxLogger = new BoxLogger(
+                        this.config.defaultBorderStyle,
+                        this.config.defaultPadding,
+                        this.config.enableColors
+                );
 
-  /**
-   * Update configuration at runtime
-   */
-  configure(newConfig: Partial<LoggerConfig>): void {
-    const oldRemoteEnabled = this.config.enableRemote
-    const oldTransportType = this.config.transportType
-    const oldRemoteUrl = this.config.remoteUrl
-    const oldAuthToken = this.config.authToken
+                if (this.config.enableRemote) {
+                        this.initializeTransport();
+                }
+        }
 
-    this.config = { ...this.config, ...newConfig }
+        /**
+         * Update configuration at runtime
+         */
+        configure(newConfig: Partial<LoggerConfig>): void {
+                const oldRemoteEnabled = this.config.enableRemote;
+                const oldTransportType = this.config.transportType;
+                const oldRemoteUrl = this.config.remoteUrl;
+                const oldAuthToken = this.config.authToken;
 
-    // Reinitialize transport if remote settings changed
-    const remoteSettingsChanged = 
-      this.config.enableRemote !== oldRemoteEnabled ||
-      this.config.transportType !== oldTransportType ||
-      this.config.remoteUrl !== oldRemoteUrl ||
-      this.config.authToken !== oldAuthToken
+                this.config = { ...this.config, ...newConfig };
 
-    if (remoteSettingsChanged) {
-      this.closeTransport()
-      if (this.config.enableRemote) {
-        this.initializeTransport()
-      }
-    }
+                // Reinitialize transport if remote settings changed
+                const remoteSettingsChanged =
+                        this.config.enableRemote !== oldRemoteEnabled ||
+                        this.config.transportType !== oldTransportType ||
+                        this.config.remoteUrl !== oldRemoteUrl ||
+                        this.config.authToken !== oldAuthToken;
 
-    // Update box logger
-    this.boxLogger = new BoxLogger(
-      this.config.defaultBorderStyle,
-      this.config.defaultPadding,
-      this.config.enableColors
-    )
-  }
+                if (remoteSettingsChanged) {
+                        this.closeTransport();
+                        if (this.config.enableRemote) {
+                                this.initializeTransport();
+                        }
+                }
 
-  /**
-   * Get current configuration
-   */
-  getConfig(): Required<LoggerConfig> {
-    return { ...this.config }
-  }
+                // Update box logger
+                this.boxLogger = new BoxLogger(
+                        this.config.defaultBorderStyle,
+                        this.config.defaultPadding,
+                        this.config.enableColors
+                );
+        }
 
-  // Log level methods
-  debug(message: string, config?: LogCallConfig): void {
-    this.log('debug', message, config)
-  }
+        /**
+         * Get current configuration
+         */
+        getConfig(): Required<LoggerConfig> {
+                return { ...this.config };
+        }
 
-  trace(message: string, config?: LogCallConfig): void {
-    this.log('trace', message, config)
-  }
+        // Log level methods
+        debug(message: string, config?: LogCallConfig): void {
+                this.log('debug', message, config);
+        }
 
-  info(message: string, config?: LogCallConfig): void {
-    this.log('info', message, config)
-  }
+        trace(message: string, config?: LogCallConfig): void {
+                this.log('trace', message, config);
+        }
 
-  success(message: string, config?: LogCallConfig): void {
-    this.log('success', message, config)
-  }
+        info(message: string, config?: LogCallConfig): void {
+                this.log('info', message, config);
+        }
 
-  warn(message: string, config?: LogCallConfig): void {
-    this.log('warn', message, config)
-  }
+        success(message: string, config?: LogCallConfig): void {
+                this.log('success', message, config);
+        }
 
-  error(message: string, config?: LogCallConfig): void {
-    this.log('error', message, config)
-  }
+        warn(message: string, config?: LogCallConfig): void {
+                this.log('warn', message, config);
+        }
 
-  fatal(message: string, config?: LogCallConfig): void {
-    this.log('fatal', message, config)
-  }
+        error(message: string, config?: LogCallConfig): void {
+                this.log('error', message, config);
+        }
 
-  /**
-   * Core logging method
-   */
-  private log(level: LogLevel, message: string, callConfig?: LogCallConfig): void {
-    // Check if log level meets minimum threshold
-    if (!this.shouldLog(level)) {
-      return
-    }
+        fatal(message: string, config?: LogCallConfig): void {
+                this.log('fatal', message, config);
+        }
 
-    const timestamp = formatTimestamp()
-    const entry: InternalLogEntry = {
-      level,
-      namespace: this.config.namespace,
-      message,
-      timestamp,
-      metadata: (callConfig as any)?.metadata
-    }
+        /**
+         * Core logging method
+         */
+        private log(level: LogLevel, message: string, callConfig?: LogCallConfig): void {
+                // Check if log level meets minimum threshold
+                if (!this.shouldLog(level)) {
+                        return;
+                }
 
-    // Format and output to terminal
-    this.outputToTerminal(entry, callConfig)
+                const timestamp = formatTimestamp();
+                const entry: InternalLogEntry = {
+                        level,
+                        namespace: this.config.namespace,
+                        message,
+                        timestamp,
+                        metadata: (callConfig as any)?.metadata
+                };
 
-    // Send to remote if enabled and level qualifies
-    if (this.shouldLogRemote(level, callConfig)) {
-      this.sendToRemote(entry).catch(error => {
-        console.error('Failed to send log to remote:', error)
-      })
-    }
-  }
+                // Format and output to terminal
+                this.outputToTerminal(entry, callConfig);
 
-  /**
-   * Check if log should be output based on minimum level
-   */
-  private shouldLog(level: LogLevel): boolean {
-    return LOG_LEVEL_PRIORITY[level] >= LOG_LEVEL_PRIORITY[this.config.minLevel]
-  }
+                // Send to remote if enabled and level qualifies
+                if (this.shouldLogRemote(level, callConfig)) {
+                        this.sendToRemote(entry).catch((error) => {
+                                console.error('Failed to send log to remote:', error);
+                        });
+                }
+        }
 
-  /**
-   * Check if log should be sent to remote
-   */
-  private shouldLogRemote(level: LogLevel, callConfig?: LogCallConfig): boolean {
-    if (!this.config.enableRemote || callConfig?.skipRemote) {
-      return false
-    }
+        /**
+         * Check if log should be output based on minimum level
+         */
+        private shouldLog(level: LogLevel): boolean {
+                return LOG_LEVEL_PRIORITY[level] >= LOG_LEVEL_PRIORITY[this.config.minLevel];
+        }
 
-    if (!REMOTE_LEVELS.has(level)) {
-      return false
-    }
+        /**
+         * Check if log should be sent to remote
+         */
+        private shouldLogRemote(level: LogLevel, callConfig?: LogCallConfig): boolean {
+                if (!this.config.enableRemote || callConfig?.skipRemote) {
+                        return false;
+                }
 
-    return LOG_LEVEL_PRIORITY[level] >= LOG_LEVEL_PRIORITY[this.config.remoteMinLevel]
-  }
+                if (!REMOTE_LEVELS.has(level)) {
+                        return false;
+                }
 
-  /**
-   * Output formatted log to terminal
-   */
-  private outputToTerminal(entry: InternalLogEntry, callConfig?: LogCallConfig): void {
-    const shouldBox = callConfig?.boxed ?? this.config.defaultBoxed
-    
-    if (shouldBox) {
-      this.outputBoxedLog(entry, callConfig)
-    } else {
-      this.outputSimpleLog(entry)
-    }
-  }
+                return LOG_LEVEL_PRIORITY[level] >= LOG_LEVEL_PRIORITY[this.config.remoteMinLevel];
+        }
 
-  /**
-   * Output simple formatted log
-   */
-  private outputSimpleLog(entry: InternalLogEntry): void {
-    const formatted = formatSimpleMessage(entry, {
-      enableTimestamp: this.config.enableTimestamp,
-      enableColors: this.config.enableColors
-    })
-    
-    console.log(formatted)
-  }
+        /**
+         * Output formatted log to terminal
+         */
+        private outputToTerminal(entry: InternalLogEntry, callConfig?: LogCallConfig): void {
+                const shouldBox = callConfig?.boxed ?? this.config.defaultBoxed;
 
-  /**
-   * Output boxed log
-   */
-  private outputBoxedLog(entry: InternalLogEntry, callConfig?: LogCallConfig): void {
-    const borderStyle = callConfig?.borderStyle ?? this.config.defaultBorderStyle
-    const padding = callConfig?.padding ?? this.config.defaultPadding
-    const title = callConfig?.title
-    const centered = callConfig?.centered ?? false
-    const color = callConfig?.color ?? getLevelColor(entry.level)
+                if (shouldBox) {
+                        this.outputBoxedLog(entry, callConfig);
+                } else {
+                        this.outputSimpleLog(entry);
+                }
+        }
 
-    const boxLogger = new BoxLogger(borderStyle, padding, this.config.enableColors)
-    
-    // Prepare content
-    const contentLines: string[] = []
-    
-    if (this.config.enableTimestamp) {
-      contentLines.push(`🕐 ${entry.timestamp}`)
-    }
-    
-    contentLines.push(`📝 ${entry.message}`)
-    
-    if (entry.metadata && Object.keys(entry.metadata).length > 0) {
-      contentLines.push('')
-      contentLines.push('📋 Metadata:')
-      contentLines.push(JSON.stringify(entry.metadata, null, 2))
-    }
+        /**
+         * Output simple formatted log
+         */
+        private outputSimpleLog(entry: InternalLogEntry): void {
+                const formatted = formatSimpleMessage(entry, {
+                        enableTimestamp: this.config.enableTimestamp,
+                        enableColors: this.config.enableColors
+                });
 
-    const boxed = boxLogger.createBox(contentLines, {
-      title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
-      color,
-      centered,
-      minWidth: 50
-    })
+                console.log(formatted);
+        }
 
-    console.log(boxed)
-  }
+        /**
+         * Output boxed log
+         */
+        private outputBoxedLog(entry: InternalLogEntry, callConfig?: LogCallConfig): void {
+                const borderStyle = callConfig?.borderStyle ?? this.config.defaultBorderStyle;
+                const padding = callConfig?.padding ?? this.config.defaultPadding;
+                const title = callConfig?.title;
+                const centered = callConfig?.centered ?? false;
+                const color = callConfig?.color ?? getLevelColor(entry.level);
 
-  /**
-   * Send log entry to remote transport
-   */
-  private async sendToRemote(entry: InternalLogEntry): Promise<void> {
-    if (!this.transport) {
-      return
-    }
+                const boxLogger = new BoxLogger(borderStyle, padding, this.config.enableColors);
 
-    const remoteEntry = {
-      level: entry.level,
-      namespace: entry.namespace,
-      message: entry.message,
-      metadata: entry.metadata,
-      timestamp: entry.timestamp
-    }
+                // Prepare content
+                const contentLines: string[] = [];
 
-    await this.transport.send(remoteEntry)
-  }
+                if (this.config.enableTimestamp) {
+                        contentLines.push(`🕐 ${entry.timestamp}`);
+                }
 
-  /**
-   * Initialize remote transport
-   */
-  private initializeTransport(): void {
-    try {
-      this.transport = createTransport(this.config.transportType, this.config.remoteUrl, {
-        timeout: this.config.remoteTimeout,
-        retryAttempts: this.config.retryAttempts,
-        reconnectDelay: this.config.wsReconnectDelay,
-        maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
-        fallbackToHttp: this.config.fallbackToHttp,
-        authToken: this.config.authToken || undefined
-      })
-    } catch (error) {
-      console.error('Failed to initialize transport:', error)
-    }
-  }
+                contentLines.push(`📝 ${entry.message}`);
 
-  /**
-   * Close transport connection
-   */
-  private async closeTransport(): Promise<void> {
-    if (this.transport?.close) {
-      await this.transport.close()
-    }
-    this.transport = null
-  }
+                if (entry.metadata && Object.keys(entry.metadata).length > 0) {
+                        contentLines.push('');
+                        contentLines.push('📋 Metadata:');
+                        contentLines.push(JSON.stringify(entry.metadata, null, 2));
+                }
 
-  /**
-   * Clean up resources
-   */
-  async close(): Promise<void> {
-    await this.closeTransport()
-  }
+                const boxed = boxLogger.createBox(contentLines, {
+                        title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
+                        color,
+                        centered,
+                        minWidth: 50
+                });
 
-  /**
-   * Get transport status
-   */
-  isConnected(): boolean {
-    return this.transport?.isConnected?.() ?? false
-  }
+                console.log(boxed);
+        }
+
+        /**
+         * Send log entry to remote transport
+         */
+        private async sendToRemote(entry: InternalLogEntry): Promise<void> {
+                if (!this.transport) {
+                        return;
+                }
+
+                const remoteEntry = {
+                        level: entry.level,
+                        namespace: entry.namespace,
+                        message: entry.message,
+                        metadata: entry.metadata,
+                        timestamp: entry.timestamp
+                };
+
+                await this.transport.send(remoteEntry);
+        }
+
+        /**
+         * Initialize remote transport
+         */
+        private initializeTransport(): void {
+                try {
+                        this.transport = createTransport(
+                                this.config.transportType,
+                                this.config.remoteUrl,
+                                {
+                                        timeout: this.config.remoteTimeout,
+                                        retryAttempts: this.config.retryAttempts,
+                                        reconnectDelay: this.config.wsReconnectDelay,
+                                        maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
+                                        fallbackToHttp: this.config.fallbackToHttp,
+                                        authToken: this.config.authToken || undefined
+                                }
+                        );
+                } catch (error) {
+                        console.error('Failed to initialize transport:', error);
+                }
+        }
+
+        /**
+         * Close transport connection
+         */
+        private async closeTransport(): Promise<void> {
+                if (this.transport?.close) {
+                        await this.transport.close();
+                }
+                this.transport = null;
+        }
+
+        /**
+         * Clean up resources
+         */
+        async close(): Promise<void> {
+                await this.closeTransport();
+        }
+
+        /**
+         * Get transport status
+         */
+        isConnected(): boolean {
+                return this.transport?.isConnected?.() ?? false;
+        }
 }

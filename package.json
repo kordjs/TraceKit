@@ -1,70 +1,71 @@
 {
-  "name": "@kordjs/tracekit",
-  "version": "1.0.0",
-  "description": "Zero-dependency TypeScript logging library with terminal styling, boxed output, and authenticated remote transports (HTTP/WebSocket)",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "node test-runner.js",
-    "test:auth": "node examples/authentication.js",
-    "example": "node examples/basic-usage.js",
-    "showcase": "node final-showcase.js",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build && npm test"
-  },
-  "keywords": [
-    "logging",
-    "logger",
-    "typescript",
-    "terminal",
-    "ansi",
-    "colors",
-    "remote-logging", 
-    "websocket",
-    "http",
-    "authentication",
-    "bearer-token",
-    "boxed-output",
-    "zero-dependencies",
-    "esm",
-    "cjs"
-  ],
-  "author": {
-    "name": "KordJS Team",
-    "url": "https://github.com/kordjs"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kordjs/tracekit.git"
-  },
-  "bugs": {
-    "url": "https://github.com/kordjs/tracekit/issues"
-  },
-  "homepage": "https://github.com/kordjs/tracekit#readme",
-  "devDependencies": {
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+        "name": "@kordjs/tracekit",
+        "version": "3.0.0",
+        "description": "Zero-dependency TypeScript logging library with terminal styling, boxed output, and authenticated remote transports (HTTP/WebSocket)",
+        "main": "dist/index.js",
+        "module": "dist/index.mjs",
+        "types": "dist/index.d.ts",
+        "exports": {
+                ".": {
+                        "types": "./dist/index.d.ts",
+                        "import": "./dist/index.mjs",
+                        "require": "./dist/index.js"
+                }
+        },
+        "files": [
+                "dist",
+                "README.md",
+                "LICENSE"
+        ],
+        "scripts": {
+                "build": "tsup",
+                "dev": "tsup --watch",
+                "clean": "rm -rf dist",
+                "prepublishOnly": "npm run clean && npm run build && npm test"
+        },
+        "keywords": [
+                "logging",
+                "logger",
+                "typescript",
+                "terminal",
+                "ansi",
+                "colors",
+                "remote-logging"
+        ],
+        "contributors": [
+                {
+                        "name": "Rayaan <0sapphy>",
+                        "email": "0sapphy@gmail.com",
+                        "url": "https://github.com/0sapphy"
+                },
+                {
+                        "name": "Saw <sawdev10>",
+                        "email": "sawdude@gmail.com",
+                        "url": "https://github.com/sawdev10"
+                }
+        ],
+        "author": {
+                "name": "KordJS",
+                "url": "https://github.com/kordjs"
+        },
+        "license": "MIT",
+        "repository": {
+                "type": "git",
+                "url": "https://github.com/kordjs/tracekit.git"
+        },
+        "bugs": {
+                "url": "https://github.com/kordjs/tracekit/issues"
+        },
+        "homepage": "https://github.com/kordjs/tracekit#readme",
+        "devDependencies": {
+                "@types/node": "^24.0.15",
+                "tsup": "^8.0.0",
+                "typescript": "^5.0.0"
+        },
+        "engines": {
+                "node": ">=16.0.0"
+        },
+        "publishConfig": {
+                "access": "public"
+        }
 }
