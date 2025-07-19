@@ -268,6 +268,9 @@ interface LoggerConfig {
   remoteTimeout?: number                // Default: 5000
   retryAttempts?: number                // Default: 3
   
+  // Authentication
+  authToken?: string                    // Default: undefined
+  
   // WebSocket specific
   wsReconnectDelay?: number             // Default: 5000
   wsMaxReconnectAttempts?: number       // Default: 5
