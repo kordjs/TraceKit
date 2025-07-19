@@ -285,6 +285,18 @@ package:
           agent: "main"
           comment: "Created comprehensive README with API docs and development guide"
 
+  - task: "Authentication Support"
+    implemented: true
+    working: true
+    file: "src/transports/http.ts, src/transports/websocket.ts, src/core/logger.ts, src/types.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Added Bearer token support for HTTP and query parameter auth for WebSocket, with runtime token updates"
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
