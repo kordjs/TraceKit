@@ -59,6 +59,9 @@ export interface LoggerConfig {
   remoteTimeout?: number
   retryAttempts?: number
   
+  // Authentication
+  authToken?: string
+  
   // WebSocket specific
   wsReconnectDelay?: number
   wsMaxReconnectAttempts?: number
