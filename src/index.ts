@@ -44,7 +44,7 @@ export const logger = new Logger()
 /**
  * Create a new logger instance with custom configuration
  */
-export function createLogger(config?: Parameters<typeof Logger.prototype.constructor>[0]): Logger {
+export function createLogger(config?: LoggerConfig): Logger {
   return new Logger(config)
 }
 
