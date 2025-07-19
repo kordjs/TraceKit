@@ -154,7 +154,7 @@ export class Logger {
       namespace: this.config.namespace,
       message,
       timestamp,
-      metadata: callConfig?.metadata
+      metadata: (callConfig as any)?.metadata
     }
 
     // Format and output to terminal
