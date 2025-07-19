@@ -35,6 +35,7 @@ export interface LogCallConfig {
   centered?: boolean
   skipRemote?: boolean
   color?: string
+  metadata?: Record<string, any>
 }
 
 /**
