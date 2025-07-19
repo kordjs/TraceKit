@@ -108,26 +108,33 @@ logger.info('Special message', {
 
 ## Remote Logging
 
-### HTTP Transport
+### HTTP Transport with Authentication
 ```typescript
 const logger = createLogger({
   enableRemote: true,
   transportType: 'http',
   remoteUrl: 'https://logsify.onrender.com/api/logs',
-  retryAttempts: 3
+  retryAttempts: 3,
+  authToken: 'your-auth-token-here'  // Sent as Authorization Bearer header
 })
 ```
 
-### WebSocket Transport
+### WebSocket Transport with Authentication
 ```typescript
 const logger = createLogger({
   enableRemote: true,
   transportType: 'websocket',
   remoteUrl: 'wss://your-server.com/logs',
   fallbackToHttp: true,
-  wsMaxReconnectAttempts: 5
+  wsMaxReconnectAttempts: 5,
+  authToken: 'your-auth-token-here'  // Appended as ?token=your-auth-token-here
 })
 ```
+
+### Authentication Details
+- **HTTP Transport**: Token sent as `Authorization: Bearer {token}` header
+- **WebSocket Transport**: Token appended as query parameter `?token={token}`
+- **Fallback Behavior**: When WebSocket fails and falls back to HTTP, the same token is used with Bearer authentication
 
 ### Log Payload
 Remote logs are sent as JSON with this structure:
