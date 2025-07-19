@@ -138,21 +138,25 @@ const multilineBox = boxLogger.createBox(
 
 console.log(multilineBox)
 
-// 8. Remote configuration example (no actual sending)
-console.log('\n8️⃣ Remote Configuration Example:')
+// 8. Remote configuration example with authentication
+console.log('\n8️⃣ Remote Configuration with Authentication:')
 const remoteLogger = createLogger({
   namespace: 'RemoteApp',
   enableRemote: true,
   transportType: 'websocket',
   remoteUrl: 'wss://logs.example.com/ws',
   fallbackToHttp: true,
-  remoteMinLevel: 'warn'
+  remoteMinLevel: 'warn',
+  authToken: 'secure-token-789'
 })
 
 console.log(`   Remote enabled: ${remoteLogger.getConfig().enableRemote}`)
 console.log(`   Transport type: ${remoteLogger.getConfig().transportType}`)
 console.log(`   Remote min level: ${remoteLogger.getConfig().remoteMinLevel}`)
+console.log(`   Auth token configured: ${!!remoteLogger.getConfig().authToken}`)
 console.log('   (Remote logs would be sent for warn, error, fatal only)')
+console.log('   (WebSocket URL: wss://logs.example.com/ws?token=secure-token-789)')
+console.log('   (HTTP fallback uses Bearer token authentication)')
 
 // 9. Color showcase
 console.log('\n9️⃣ Color Showcase:')
