@@ -2,7 +2,7 @@
  * Test runner for TraceKit (compiled version)
  */
 
-const { Logger, InMemoryTransport } = require('./dist/index.js');
+const { Logger, InMemoryTransport } = require('../dist/index.js');
 
 // Simple test runner
 class TestRunner {

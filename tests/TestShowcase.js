@@ -13,7 +13,7 @@ const {
         Colors,
         BoxLogger,
         InMemoryTransport
-} = require('./dist/index.js');
+} = require('../dist/index.js');
 
 console.log('🎉 TraceKit - Complete Feature Showcase\n');
 

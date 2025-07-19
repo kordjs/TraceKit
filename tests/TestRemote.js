@@ -2,7 +2,7 @@
  * Test remote HTTP transport
  */
 
-const { createLogger, HTTPTransport } = require('./dist/index.js');
+const { createLogger, HTTPTransport } = require('../dist/index.js');
 
 async function testRemoteLogging() {
         console.log('🌐 Testing Remote HTTP Transport...\n');
