@@ -1,7 +1,7 @@
 {
   "name": "@kordjs/tracekit",
   "version": "1.0.0",
-  "description": "TypeScript-based terminal and remote logging library with zero dependencies",
+  "description": "Zero-dependency TypeScript logging library with terminal styling, boxed output, and authenticated remote transports (HTTP/WebSocket)",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -13,35 +13,58 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "node --test dist/test.js",
-    "prepublishOnly": "npm run build"
+    "test": "node test-runner.js",
+    "test:auth": "node examples/authentication.js",
+    "example": "node examples/basic-usage.js",
+    "showcase": "node final-showcase.js",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
   },
   "keywords": [
     "logging",
     "logger",
-    "terminal",
-    "remote",
     "typescript",
+    "terminal",
+    "ansi",
+    "colors",
+    "remote-logging", 
     "websocket",
     "http",
-    "ansi"
+    "authentication",
+    "bearer-token",
+    "boxed-output",
+    "zero-dependencies",
+    "esm",
+    "cjs"
   ],
-  "author": "KordJS Team",
+  "author": {
+    "name": "KordJS Team",
+    "url": "https://github.com/kordjs"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/kordjs/tracekit.git"
   },
+  "bugs": {
+    "url": "https://github.com/kordjs/tracekit/issues"
+  },
+  "homepage": "https://github.com/kordjs/tracekit#readme",
   "devDependencies": {
     "tsup": "^8.0.0",
     "typescript": "^5.0.0"
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
