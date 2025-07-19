@@ -214,7 +214,7 @@ class BoxLogger {
 #### HTTPTransport
 ```typescript
 class HTTPTransport implements Transport {
-  constructor(url: string, timeout?: number, retryAttempts?: number)
+  constructor(url: string, timeout?: number, retryAttempts?: number, authToken?: string)
   send(entry: LogEntry): Promise<boolean>
 }
 ```
@@ -227,7 +227,8 @@ class WebSocketTransport implements Transport {
     reconnectDelay?: number,
     maxReconnectAttempts?: number,
     httpFallbackUrl?: string,
-    fallbackToHttp?: boolean
+    fallbackToHttp?: boolean,
+    authToken?: string
   )
   send(entry: LogEntry): Promise<boolean>
   close(): Promise<void>
