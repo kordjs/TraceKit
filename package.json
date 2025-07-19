@@ -18,6 +18,7 @@
                 "LICENSE"
         ],
         "scripts": {
+                "test": "node tests/TestRunner",
                 "build": "tsup",
                 "dev": "tsup --watch",
                 "clean": "rm -rf dist",
@@ -51,7 +52,7 @@
         "license": "MIT",
         "repository": {
                 "type": "git",
-                "url": "https://github.com/kordjs/tracekit.git"
+                "url": "git+https://github.com/kordjs/tracekit.git"
         },
         "bugs": {
                 "url": "https://github.com/kordjs/tracekit/issues"
