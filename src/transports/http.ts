@@ -1,17 +1,19 @@
 import { Transport, LogEntry } from '../types'
 
 /**
- * HTTP Transport for sending logs via fetch API
+ * HTTP Transport for sending logs via fetch API with authentication support
  */
 export class HTTPTransport implements Transport {
   private url: string
   private timeout: number
   private retryAttempts: number
+  private authToken?: string
 
-  constructor(url: string, timeout: number = 5000, retryAttempts: number = 3) {
+  constructor(url: string, timeout: number = 5000, retryAttempts: number = 3, authToken?: string) {
     this.url = url
     this.timeout = timeout
     this.retryAttempts = retryAttempts
+    this.authToken = authToken
   }
 
   async send(entry: LogEntry): Promise<boolean> {
@@ -22,11 +24,18 @@ export class HTTPTransport implements Transport {
         const controller = new AbortController()
         const timeoutId = setTimeout(() => controller.abort(), this.timeout)
 
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+        }
+
+        // Add Bearer token if provided
+        if (this.authToken) {
+          headers['Authorization'] = `Bearer ${this.authToken}`
+        }
+
         const response = await fetch(this.url, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers,
           body: JSON.stringify(entry),
           signal: controller.signal,
         })
@@ -44,6 +53,12 @@ export class HTTPTransport implements Transport {
         // Don't retry on certain errors
         if (error instanceof TypeError && error.message.includes('fetch')) {
           break // Network error, don't retry
+        }
+        
+        // Don't retry on authentication errors
+        if (error instanceof Error && error.message.includes('401')) {
+          console.error('Authentication failed - check your auth token')
+          break
         }
         
         // Wait before retry (exponential backoff)
