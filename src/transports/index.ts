@@ -19,11 +19,12 @@ export function createTransport(
     reconnectDelay?: number
     maxReconnectAttempts?: number
     fallbackToHttp?: boolean
+    authToken?: string
   } = {}
 ): Transport {
   switch (type) {
     case 'http':
-      return new HTTPTransport(url, options.timeout, options.retryAttempts)
+      return new HTTPTransport(url, options.timeout, options.retryAttempts, options.authToken)
     
     case 'websocket':
       // For WebSocket, if fallback is enabled, use the same URL with HTTP protocol
@@ -33,7 +34,8 @@ export function createTransport(
         options.reconnectDelay,
         options.maxReconnectAttempts,
         httpUrl,
-        options.fallbackToHttp
+        options.fallbackToHttp,
+        options.authToken
       )
     
     case 'memory':
