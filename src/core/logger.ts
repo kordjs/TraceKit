@@ -80,6 +80,7 @@ export class Logger {
     const oldRemoteEnabled = this.config.enableRemote
     const oldTransportType = this.config.transportType
     const oldRemoteUrl = this.config.remoteUrl
+    const oldAuthToken = this.config.authToken
 
     this.config = { ...this.config, ...newConfig }
 
@@ -87,7 +88,8 @@ export class Logger {
     const remoteSettingsChanged = 
       this.config.enableRemote !== oldRemoteEnabled ||
       this.config.transportType !== oldTransportType ||
-      this.config.remoteUrl !== oldRemoteUrl
+      this.config.remoteUrl !== oldRemoteUrl ||
+      this.config.authToken !== oldAuthToken
 
     if (remoteSettingsChanged) {
       this.closeTransport()
