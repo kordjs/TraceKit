@@ -134,22 +134,21 @@ runner.test('Box logging works', () => {
   logger.error('Boxed error', { boxed: true, centered: true })
 })
 
-// Test: Configuration merging
-runner.test('Configuration merging', () => {
+// Test: Authentication configuration
+runner.test('Authentication configuration', () => {
   const logger = new Logger({
-    namespace: 'Initial',
-    enableTimestamp: false
+    authToken: 'test-token-123',
+    enableRemote: true,
+    transportType: 'http'
   })
   
-  let config = logger.getConfig()
-  assert(config.namespace === 'Initial', 'Initial namespace should be set')
-  assert(config.enableTimestamp === false, 'Timestamp should be disabled')
-  assert(config.enableColors === true, 'Colors should have default value')
+  const config = logger.getConfig()
+  assert(config.authToken === 'test-token-123', 'Auth token should be set')
   
-  logger.configure({ namespace: 'Updated' })
-  config = logger.getConfig()
-  assert(config.namespace === 'Updated', 'Namespace should be updated')
-  assert(config.enableTimestamp === false, 'Timestamp should remain disabled')
+  // Update auth token
+  logger.configure({ authToken: 'updated-token-456' })
+  const updatedConfig = logger.getConfig()
+  assert(updatedConfig.authToken === 'updated-token-456', 'Auth token should be updated')
 })
 
 // Run tests
