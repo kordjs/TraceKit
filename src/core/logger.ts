@@ -284,7 +284,8 @@ export class Logger {
         retryAttempts: this.config.retryAttempts,
         reconnectDelay: this.config.wsReconnectDelay,
         maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
-        fallbackToHttp: this.config.fallbackToHttp
+        fallbackToHttp: this.config.fallbackToHttp,
+        authToken: this.config.authToken || undefined
       })
     } catch (error) {
       console.error('Failed to initialize transport:', error)
