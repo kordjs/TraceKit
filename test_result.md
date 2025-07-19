@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Rewrite @kordjs/tracekit - a TypeScript-based terminal and remote logging library with zero dependencies. Features: 7 log levels, ANSI terminal styling, boxed output, HTTP/WebSocket remote transports, highly configurable, ESM/CJS exports, tsup bundler"
+user_problem_statement: "Rewrite @kordjs/tracekit - a TypeScript-based terminal and remote logging library with zero dependencies. Features: 7 log levels, ANSI terminal styling, boxed output, HTTP/WebSocket remote transports with authentication support, highly configurable, ESM/CJS exports, tsup bundler"
 
 package:
   - task: "Package Structure Setup"
