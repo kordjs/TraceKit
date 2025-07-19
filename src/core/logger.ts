@@ -26,6 +26,7 @@ const DEFAULT_CONFIG: Required<LoggerConfig> = {
   transportType: 'http',
   remoteTimeout: 5000,
   retryAttempts: 3,
+  authToken: '',
   wsReconnectDelay: 5000,
   wsMaxReconnectAttempts: 5,
   fallbackToHttp: true,
