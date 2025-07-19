@@ -2,9 +2,10 @@ import { Transport, LogEntry } from '../types'
 import { HTTPTransport } from './http'
 
 /**
- * WebSocket Transport with reconnection logic and HTTP fallback
+ * WebSocket Transport with reconnection logic, HTTP fallback, and authentication
  */
 export class WebSocketTransport implements Transport {
+  private baseUrl: string
   private url: string
   private ws: WebSocket | null = null
   private reconnectDelay: number
@@ -13,21 +14,32 @@ export class WebSocketTransport implements Transport {
   private httpFallback: HTTPTransport | null = null
   private fallbackToHttp: boolean
   private connectionPromise: Promise<boolean> | null = null
+  private authToken?: string
 
   constructor(
     url: string,
     reconnectDelay: number = 5000,
     maxReconnectAttempts: number = 5,
     httpFallbackUrl?: string,
-    fallbackToHttp: boolean = true
+    fallbackToHttp: boolean = true,
+    authToken?: string
   ) {
-    this.url = url
+    this.baseUrl = url
+    this.authToken = authToken
     this.reconnectDelay = reconnectDelay
     this.maxReconnectAttempts = maxReconnectAttempts
     this.fallbackToHttp = fallbackToHttp
 
+    // Construct WebSocket URL with token if provided
+    if (authToken) {
+      const separator = url.includes('?') ? '&' : '?'
+      this.url = `${url}${separator}token=${encodeURIComponent(authToken)}`
+    } else {
+      this.url = url
+    }
+
     if (httpFallbackUrl && fallbackToHttp) {
-      this.httpFallback = new HTTPTransport(httpFallbackUrl)
+      this.httpFallback = new HTTPTransport(httpFallbackUrl, 5000, 3, authToken)
     }
   }
 
@@ -77,6 +89,7 @@ export class WebSocketTransport implements Transport {
             this.ws.close()
             this.ws = null
           }
+          console.error('WebSocket connection timeout')
           resolve(false)
         }, 10000) // 10 second connection timeout
 
@@ -94,9 +107,17 @@ export class WebSocketTransport implements Transport {
           resolve(false)
         }
 
-        this.ws.onclose = () => {
+        this.ws.onclose = (event) => {
           clearTimeout(timeout)
-          console.log('WebSocket connection closed')
+          console.log(`WebSocket connection closed: ${event.code} ${event.reason}`)
+          
+          // Check for authentication errors
+          if (event.code === 1008 || event.code === 4001) {
+            console.error('WebSocket authentication failed - check your auth token')
+            resolve(false)
+            return
+          }
+          
           this.handleDisconnection()
           resolve(false)
         }
