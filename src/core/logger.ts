@@ -382,7 +382,11 @@ export class Logger {
                         });
                 } else {
                         // Use traditional BoxLogger for bordered output
-                        const boxLogger = new BoxLogger(borderStyle as any, padding, this.config.enableColors);
+                        const boxLogger = new BoxLogger(
+                                this.getBoxBorderStyle(borderStyle), 
+                                padding, 
+                                this.config.enableColors
+                        );
                         boxed = boxLogger.createBox(contentLines, {
                                 title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
                                 color,
