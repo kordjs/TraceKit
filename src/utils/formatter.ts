@@ -20,13 +20,14 @@ export function getDisplayTimestamp(date: Date = new Date()): string {
 }
 
 /**
- * Format log level display
+ * Format log level display with consistent spacing
  */
 export function formatLevel(level: LogLevel, enableColors: boolean = true): string {
         const icon = LogIcons[level] || '';
         const levelText = level.toUpperCase().padEnd(7);
         const color = getLevelColor(level);
 
+        // Ensure consistent spacing: icon + single space + level text
         if (enableColors) {
                 return `${icon} ${colorize(levelText, color)}`;
         }
