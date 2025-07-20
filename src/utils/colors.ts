@@ -73,15 +73,25 @@ export const Colors = {
 } as const;
 
 /**
- * Log level icons/prefixes
+ * Unicode emojis and symbols for log level indicators
+ * 
+ * @description Maps each log level to an appropriate emoji for visual identification.
+ * These icons are displayed before the log level text to provide quick visual context.
  */
 export const LogIcons = {
+        /** Debug icon - bug emoji for debugging information */
         debug: '🐛',
+        /** Trace icon - magnifying glass for detailed tracing */
         trace: '🔍',
+        /** Info icon - information symbol for general information */
         info: 'ℹ️',
+        /** Success icon - check mark for successful operations */
         success: '✅',
+        /** Warning icon - warning triangle for potential issues */
         warn: '⚠️',
+        /** Error icon - X mark for errors and failures */
         error: '❌',
+        /** Fatal icon - skull for critical/fatal errors */
         fatal: '💀'
 } as const;
 
