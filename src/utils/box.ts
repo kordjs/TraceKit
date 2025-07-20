@@ -169,11 +169,11 @@ export class BoxLogger {
 
 /**
  * MinimalBox - Compact, borderless logging output with alignment and padding
- * 
+ *
  * @description A minimal box format that provides structured output without borders.
  * Perfect for CI pipelines or environments where clean, minimal output is preferred.
  * Still maintains alignment and applies padding for readable formatting.
- * 
+ *
  * @example
  * ```typescript
  * const minimalBox = new MinimalBox(2, true);
@@ -194,21 +194,18 @@ export class MinimalBox {
 
         /**
          * Create a new MinimalBox formatter
-         * 
+         *
          * @param padding - Number of spaces to add for indentation (default: 1)
          * @param enableColors - Whether to apply ANSI color codes (default: true)
          */
-        constructor(
-                padding: number = 1,
-                enableColors: boolean = true
-        ) {
+        constructor(padding: number = 1, enableColors: boolean = true) {
                 this.padding = padding;
                 this.enableColors = enableColors;
         }
 
         /**
          * Create a minimal formatted box
-         * 
+         *
          * @param content - Content lines to format
          * @param options - Formatting options
          * @returns Formatted minimal box output
@@ -247,7 +244,7 @@ export class MinimalBox {
 
         private createContentLine(content: string, centered: boolean = false): string {
                 const paddingStr = ' '.repeat(this.padding);
-                
+
                 if (centered) {
                         // For centered text, we'll just add equal padding on both sides
                         const extraPadding = ' '.repeat(this.padding);
