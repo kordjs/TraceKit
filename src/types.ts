@@ -9,6 +9,11 @@ export type LogLevel = 'debug' | 'trace' | 'info' | 'success' | 'warn' | 'error'
 export type BorderStyle = 'rounded' | 'ascii' | 'minimal';
 
 /**
+ * Border styles that use actual borders (for BoxLogger)
+ */
+export type BoxBorderStyle = 'rounded' | 'ascii';
+
+/**
  * Transport types
  */
 export type TransportType = 'http' | 'websocket' | 'memory';
