@@ -1,14 +1,14 @@
 /**
  * ANSI color codes and styling for terminal output
- * 
+ *
  * @description Complete collection of ANSI escape codes for terminal styling.
  * Includes colors for log levels, text formatting, and background colors.
  * All codes are raw ANSI escape sequences for zero-dependency operation.
- * 
+ *
  * @example
  * ```typescript
  * import { Colors, colorize } from '@kordjs/tracekit';
- * 
+ *
  * console.log(colorize('Error message', Colors.red));
  * console.log(`${Colors.bold}Bold text${Colors.reset}`);
  * ```
@@ -74,7 +74,7 @@ export const Colors = {
 
 /**
  * Unicode emojis and symbols for log level indicators
- * 
+ *
  * @description Maps each log level to an appropriate emoji for visual identification.
  * These icons are displayed before the log level text to provide quick visual context.
  */
@@ -97,16 +97,16 @@ export const LogIcons = {
 
 /**
  * Apply ANSI color codes to text
- * 
+ *
  * @param text - The text to colorize
  * @param color - ANSI color code to apply
  * @param enableColors - Whether to apply colors (default: true)
  * @returns Colorized text with ANSI codes, or plain text if colors disabled
- * 
+ *
  * @description Wraps text with the specified ANSI color code and reset sequence.
  * If colors are disabled, returns the original text unchanged. This function
  * handles the common pattern of applying colors conditionally.
- * 
+ *
  * @example
  * ```typescript
  * const redText = colorize('Error!', Colors.red);
@@ -120,13 +120,13 @@ export function colorize(text: string, color: string, enableColors: boolean = tr
 
 /**
  * Get the appropriate color for a log level
- * 
+ *
  * @param level - The log level to get color for
  * @returns ANSI color code for the log level
- * 
+ *
  * @description Maps log levels to their corresponding colors from the Colors object.
  * Falls back to info color (blue) if the level is not recognized.
- * 
+ *
  * @example
  * ```typescript
  * const errorColor = getLevelColor('error'); // Returns Colors.error (red)

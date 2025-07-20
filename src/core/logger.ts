@@ -62,7 +62,7 @@ const REMOTE_LEVELS: Set<LogLevel> = new Set(['info', 'warn', 'error', 'fatal'])
 
 /**
  * TraceKit Logger - Advanced logging with terminal styling and remote transport
- * 
+ *
  * @description The main Logger class provides comprehensive logging functionality with:
  * - 7 log levels (debug, trace, info, success, warn, error, fatal)
  * - ANSI color-coded terminal output with configurable styling
@@ -70,17 +70,17 @@ const REMOTE_LEVELS: Set<LogLevel> = new Set(['info', 'warn', 'error', 'fatal'])
  * - Remote transport via HTTP or WebSocket with authentication support
  * - Highly configurable with both global and per-call configuration
  * - Zero external dependencies
- * 
+ *
  * @example
  * ```typescript
  * import { Logger } from '@kordjs/tracekit';
- * 
+ *
  * const logger = new Logger({
  *   namespace: 'MyApp',
  *   enableRemote: true,
  *   transportType: 'websocket'
  * });
- * 
+ *
  * logger.info('Application started');
  * logger.error('Database connection failed', { boxed: true });
  * ```
@@ -97,12 +97,12 @@ export class Logger {
          * Get box border style, defaulting to rounded if minimal is selected
          */
         private getBoxBorderStyle(borderStyle: BorderStyle): BoxBorderStyle {
-                return borderStyle === 'minimal' ? 'rounded' : borderStyle as BoxBorderStyle;
+                return borderStyle === 'minimal' ? 'rounded' : (borderStyle as BoxBorderStyle);
         }
 
         /**
          * Create a new Logger instance
-         * 
+         *
          * @param config - Logger configuration options
          * @description Initializes a new logger with the provided configuration.
          * Configuration is merged with sensible defaults. If remote logging is enabled,
@@ -123,12 +123,12 @@ export class Logger {
 
         /**
          * Update logger configuration at runtime
-         * 
+         *
          * @param newConfig - Partial configuration to merge with existing settings
          * @description Updates the logger configuration with new values. The configuration
          * is merged with existing settings, so only provided values are changed. If remote
          * transport settings are modified, the transport connection will be re-initialized.
-         * 
+         *
          * @example
          * ```typescript
          * logger.configure({
@@ -168,7 +168,7 @@ export class Logger {
 
         /**
          * Get current logger configuration
-         * 
+         *
          * @returns Complete configuration object with all default values resolved
          * @description Returns a copy of the current configuration. This includes
          * all configuration values with defaults resolved, providing insight into
@@ -179,19 +179,19 @@ export class Logger {
         }
 
         // Log level methods
-        
+
         /**
          * Log debug message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs a debug message with cyan coloring. Debug messages are
          * typically used for detailed diagnostic information during development.
-         * 
+         *
          * @example
          * ```typescript
-         * logger.debug('User authentication attempt', { 
-         *   metadata: { userId: '123', attempt: 1 } 
+         * logger.debug('User authentication attempt', {
+         *   metadata: { userId: '123', attempt: 1 }
          * });
          * ```
          */
@@ -201,7 +201,7 @@ export class Logger {
 
         /**
          * Log trace message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs a trace message with magenta coloring. Trace messages are
@@ -213,7 +213,7 @@ export class Logger {
 
         /**
          * Log info message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs an informational message with blue coloring. Info messages
@@ -225,7 +225,7 @@ export class Logger {
 
         /**
          * Log success message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs a success message with green coloring. Success messages
@@ -237,7 +237,7 @@ export class Logger {
 
         /**
          * Log warning message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs a warning message with yellow coloring. Warning messages
@@ -249,7 +249,7 @@ export class Logger {
 
         /**
          * Log error message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs an error message with red coloring. Error messages
@@ -261,7 +261,7 @@ export class Logger {
 
         /**
          * Log fatal message
-         * 
+         *
          * @param message - The message to log
          * @param config - Optional per-call configuration for styling and behavior
          * @description Logs a fatal message with bright red coloring. Fatal messages
@@ -385,8 +385,8 @@ export class Logger {
                 } else {
                         // Use traditional BoxLogger for bordered output
                         const boxLogger = new BoxLogger(
-                                this.getBoxBorderStyle(borderStyle), 
-                                padding, 
+                                this.getBoxBorderStyle(borderStyle),
+                                padding,
                                 this.config.enableColors
                         );
                         boxed = boxLogger.createBox(contentLines, {
@@ -424,22 +424,19 @@ export class Logger {
          */
         private initializeTransport(): void {
                 try {
-                        const url = this.config.transportType === 'websocket' 
-                                ? REMOTE_URLS.websocket 
-                                : REMOTE_URLS.http;
+                        const url =
+                                this.config.transportType === 'websocket'
+                                        ? REMOTE_URLS.websocket
+                                        : REMOTE_URLS.http;
 
-                        this.transport = createTransport(
-                                this.config.transportType,
-                                url,
-                                {
-                                        timeout: this.config.transportTimeout,
-                                        retryAttempts: this.config.retryAttempts,
-                                        reconnectDelay: this.config.wsReconnectDelay,
-                                        maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
-                                        fallbackToHttp: this.config.fallbackToHttp,
-                                        authToken: this.config.authToken || undefined
-                                }
-                        );
+                        this.transport = createTransport(this.config.transportType, url, {
+                                timeout: this.config.transportTimeout,
+                                retryAttempts: this.config.retryAttempts,
+                                reconnectDelay: this.config.wsReconnectDelay,
+                                maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
+                                fallbackToHttp: this.config.fallbackToHttp,
+                                authToken: this.config.authToken || undefined
+                        });
                 } catch (error) {
                         console.error('Failed to initialize transport:', error);
                 }
