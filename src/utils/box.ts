@@ -166,3 +166,99 @@ export class BoxLogger {
                 return `${leftBorder}${leftPadding}${content}${rightPadding}${rightBorder}`;
         }
 }
+
+/**
+ * MinimalBox - Compact, borderless logging output with alignment and padding
+ * 
+ * @description A minimal box format that provides structured output without borders.
+ * Perfect for CI pipelines or environments where clean, minimal output is preferred.
+ * Still maintains alignment and applies padding for readable formatting.
+ * 
+ * @example
+ * ```typescript
+ * const minimalBox = new MinimalBox(2, true);
+ * const output = minimalBox.createBox(['Line 1', 'Line 2'], {
+ *   title: 'STATUS',
+ *   color: Colors.green
+ * });
+ * console.log(output);
+ * // Output:
+ * // === STATUS ===
+ * //   Line 1
+ * //   Line 2
+ * ```
+ */
+export class MinimalBox {
+        private padding: number;
+        private enableColors: boolean;
+
+        /**
+         * Create a new MinimalBox formatter
+         * 
+         * @param padding - Number of spaces to add for indentation (default: 1)
+         * @param enableColors - Whether to apply ANSI color codes (default: true)
+         */
+        constructor(
+                padding: number = 1,
+                enableColors: boolean = true
+        ) {
+                this.padding = padding;
+                this.enableColors = enableColors;
+        }
+
+        /**
+         * Create a minimal formatted box
+         * 
+         * @param content - Content lines to format
+         * @param options - Formatting options
+         * @returns Formatted minimal box output
+         */
+        createBox(
+                content: string | string[],
+                options: {
+                        title?: string;
+                        color?: string;
+                        centered?: boolean;
+                } = {}
+        ): string {
+                const lines = Array.isArray(content) ? content : content.split('\n');
+                const color = options.color || Colors.blue;
+                const result: string[] = [];
+
+                // Add title if provided
+                if (options.title) {
+                        const titleLine = this.createTitleLine(options.title, color);
+                        result.push(titleLine);
+                }
+
+                // Add content lines with padding
+                for (const line of lines) {
+                        const contentLine = this.createContentLine(line, options.centered);
+                        result.push(contentLine);
+                }
+
+                return result.join('\n');
+        }
+
+        private createTitleLine(title: string, color: string): string {
+                const titleText = `=== ${title} ===`;
+                return colorize(titleText, color, this.enableColors);
+        }
+
+        private createContentLine(content: string, centered: boolean = false): string {
+                const paddingStr = ' '.repeat(this.padding);
+                
+                if (centered) {
+                        // For centered text, we'll just add equal padding on both sides
+                        const extraPadding = ' '.repeat(this.padding);
+                        return `${paddingStr}${extraPadding}${content}${extraPadding}`;
+                }
+
+                return `${paddingStr}${content}`;
+        }
+
+        private getDisplayWidth(text: string): number {
+                // Remove ANSI escape sequences for width calculation
+                return text.replace(/\x1b\[[0-9;]*m/g, '').length;
+        }
+}
