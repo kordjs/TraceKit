@@ -25,7 +25,7 @@ console.log('   All log levels now have uniform emoji + level text formatting:\n
 const levels = ['debug', 'trace', 'info', 'success', 'warn', 'error', 'fatal'];
 levels.forEach(level => {
         const formatted = formatLevel(level, false);
-        console.log(`   ${formatted} ← Level: ${level} (consistent padding)`);
+        console.log(`   ${formatted} ← Level: ${level} (consistent 8-char padding)`);
 });
 
 // =======================================
