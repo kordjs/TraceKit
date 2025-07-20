@@ -279,15 +279,19 @@ export class Logger {
         }
 
         /**
-         * Initialize remote transport
+         * Initialize remote transport with hardcoded URLs
          */
         private initializeTransport(): void {
                 try {
+                        const url = this.config.transportType === 'websocket' 
+                                ? REMOTE_URLS.websocket 
+                                : REMOTE_URLS.http;
+
                         this.transport = createTransport(
                                 this.config.transportType,
-                                this.config.remoteUrl,
+                                url,
                                 {
-                                        timeout: this.config.remoteTimeout,
+                                        timeout: this.config.transportTimeout,
                                         retryAttempts: this.config.retryAttempts,
                                         reconnectDelay: this.config.wsReconnectDelay,
                                         maxReconnectAttempts: this.config.wsMaxReconnectAttempts,
