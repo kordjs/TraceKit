@@ -27,12 +27,12 @@ const BoxChars = {
  * BoxLogger for creating bordered terminal output
  */
 export class BoxLogger {
-        private borderStyle: BorderStyle;
+        private borderStyle: BoxBorderStyle;
         private padding: number;
         private enableColors: boolean;
 
         constructor(
-                borderStyle: BorderStyle = 'rounded',
+                borderStyle: BoxBorderStyle = 'rounded',
                 padding: number = 1,
                 enableColors: boolean = true
         ) {
