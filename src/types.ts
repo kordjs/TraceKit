@@ -6,7 +6,7 @@ export type LogLevel = 'debug' | 'trace' | 'info' | 'success' | 'warn' | 'error'
 /**
  * Border styles for boxed output
  */
-export type BorderStyle = 'rounded' | 'ascii';
+export type BorderStyle = 'rounded' | 'ascii' | 'minimal';
 
 /**
  * Transport types
