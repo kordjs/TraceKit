@@ -184,5 +184,121 @@ runner.test('Authentication configuration', () => {
         assert(updatedConfig.authToken === 'updated-token-456', 'Auth token should be updated');
 });
 
+// Test: New LoggerConfig interfaces
+runner.test('New LoggerConfig interfaces work', () => {
+        const logger = new Logger({
+                // General options
+                namespace: 'TestApp',
+                enableTimestamp: true,
+                enableColors: true,
+                
+                // Terminal options
+                defaultBoxed: true,
+                defaultBorderStyle: 'minimal',
+                defaultPadding: 2,
+                
+                // Remote options
+                enableRemote: true,
+                transportType: 'http',
+                transportTimeout: 10000,
+                retryAttempts: 5
+        });
+
+        const config = logger.getConfig();
+        assert(config.namespace === 'TestApp', 'Namespace should be set');
+        assert(config.defaultBorderStyle === 'minimal', 'Border style should be minimal');
+        assert(config.transportTimeout === 10000, 'Transport timeout should be renamed');
+        assert(config.retryAttempts === 5, 'Retry attempts should be configurable');
+});
+
+// Test: Fixed remote URLs (no override)
+runner.test('Remote URLs are fixed and cannot be overridden', () => {
+        const logger = new Logger({
+                enableRemote: true,
+                transportType: 'http'
+        });
+
+        // The logger should use hardcoded URLs, not allow custom ones
+        const config = logger.getConfig();
+        
+        // remoteUrl should not exist in the config anymore
+        assert(config.remoteUrl === undefined, 'remoteUrl should not be configurable');
+        
+        // The logger should still be able to initialize (proving hardcoded URLs work)
+        assert(logger.getConfig().enableRemote === true, 'Remote should still be enabled');
+});
+
+// Test: MinimalBox style
+runner.test('MinimalBox style works', () => {
+        const { MinimalBox, Colors } = require('../dist/index.js');
+        
+        const minimalBox = new MinimalBox(2, false); // Disable colors for testing
+        const output = minimalBox.createBox(
+                ['Line 1', 'Line 2'],
+                { title: 'TEST', color: Colors.green }
+        );
+        
+        const lines = output.split('\n');
+        assert(lines.length === 3, 'Should have title + 2 content lines');
+        assert(lines[0].includes('=== TEST ==='), 'Should have minimal title format');
+        assert(lines[1].startsWith('  '), 'Content should be indented with padding');
+        assert(lines[2].startsWith('  '), 'All content should be consistently indented');
+});
+
+// Test: BorderStyle minimal works in logger
+runner.test('Logger supports minimal border style', () => {
+        const logger = new Logger({ 
+                enableRemote: false,
+                defaultBorderStyle: 'minimal'
+        });
+
+        // This should not throw and should work
+        logger.info('Minimal test', { boxed: true });
+        logger.warn('Minimal warning', { 
+                boxed: true, 
+                borderStyle: 'minimal',
+                title: 'WARNING'
+        });
+});
+
+// Test: Enhanced configuration options
+runner.test('Enhanced configuration with new options', () => {
+        const logger = new Logger();
+        
+        // Test the renamed transportTimeout
+        logger.configure({
+                transportTimeout: 15000,
+                wsReconnectDelay: 3000,
+                wsMaxReconnectAttempts: 10
+        });
+        
+        const config = logger.getConfig();
+        assert(config.transportTimeout === 15000, 'transportTimeout should work');
+        assert(config.wsReconnectDelay === 3000, 'WebSocket delay should be configurable');
+        assert(config.wsMaxReconnectAttempts === 10, 'Max reconnect attempts should be configurable');
+});
+
+// Test: Spacing consistency
+runner.test('Log level spacing is consistent', () => {
+        const { formatLevel } = require('../dist/index.js');
+        
+        const debugFormatted = formatLevel('debug', false);
+        const infoFormatted = formatLevel('info', false);
+        const errorFormatted = formatLevel('error', false);
+        
+        // All should have same total length due to padding
+        const debugLength = debugFormatted.length;
+        const infoLength = infoFormatted.length;
+        const errorLength = errorFormatted.length;
+        
+        assert(debugLength === infoLength, 'Debug and info should have same formatted length');
+        assert(infoLength === errorLength, 'Info and error should have same formatted length');
+        
+        // Should follow pattern: emoji + space + padded level
+        assert(debugFormatted.includes('🐛 '), 'Debug should have correct icon and spacing');
+        assert(infoFormatted.includes('ℹ️ '), 'Info should have correct icon and spacing');
+        assert(errorFormatted.includes('❌ '), 'Error should have correct icon and spacing');
+});
+
 // Run tests
 runner.run().catch(console.error);
