@@ -92,6 +92,13 @@ export class Logger {
         private boxLogger: BoxLogger;
 
         /**
+         * Get box border style, defaulting to rounded if minimal is selected
+         */
+        private getBoxBorderStyle(borderStyle: BorderStyle): BoxBorderStyle {
+                return borderStyle === 'minimal' ? 'rounded' : borderStyle as BoxBorderStyle;
+        }
+
+        /**
          * Create a new Logger instance
          * 
          * @param config - Logger configuration options
@@ -102,7 +109,7 @@ export class Logger {
         constructor(config: LoggerConfig = {}) {
                 this.config = { ...DEFAULT_CONFIG, ...config };
                 this.boxLogger = new BoxLogger(
-                        this.config.defaultBorderStyle,
+                        this.getBoxBorderStyle(this.config.defaultBorderStyle),
                         this.config.defaultPadding,
                         this.config.enableColors
                 );
