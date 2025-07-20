@@ -284,6 +284,7 @@ runner.test('Log level spacing is consistent', () => {
         
         const debugFormatted = formatLevel('debug', false);
         const infoFormatted = formatLevel('info', false);
+        const successFormatted = formatLevel('success', false);
         const errorFormatted = formatLevel('error', false);
         
         // Should follow pattern: emoji + space + padded level text
@@ -291,10 +292,11 @@ runner.test('Log level spacing is consistent', () => {
         assert(infoFormatted.includes('ℹ️ '), 'Info should have correct icon and spacing');
         assert(errorFormatted.includes('❌ '), 'Error should have correct icon and spacing');
         
-        // All level texts should be padded to same length (7 chars + space after emoji)
-        assert(debugFormatted.includes('DEBUG  '), 'Debug should be properly padded');
-        assert(infoFormatted.includes('INFO   '), 'Info should be properly padded');
-        assert(errorFormatted.includes('ERROR  '), 'Error should be properly padded');
+        // All level texts should be padded to at least 8 characters after emoji
+        assert(debugFormatted.includes('DEBUG   '), 'Debug should be properly padded to 8 chars');
+        assert(infoFormatted.includes('INFO    '), 'Info should be properly padded to 8 chars');
+        assert(successFormatted.includes('SUCCESS '), 'Success should be properly padded to 8 chars');
+        assert(errorFormatted.includes('ERROR   '), 'Error should be properly padded to 8 chars');
 });
 
 // Run tests
