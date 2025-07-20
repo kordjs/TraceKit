@@ -11,6 +11,7 @@ export { Logger } from './core/logger';
 export type {
         LogLevel,
         BorderStyle,
+        BoxBorderStyle,
         TransportType,
         LogEntry,
         LogCallConfig,
