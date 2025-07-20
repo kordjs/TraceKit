@@ -170,30 +170,94 @@ export class Logger {
         }
 
         // Log level methods
+        
+        /**
+         * Log debug message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs a debug message with cyan coloring. Debug messages are
+         * typically used for detailed diagnostic information during development.
+         * 
+         * @example
+         * ```typescript
+         * logger.debug('User authentication attempt', { 
+         *   metadata: { userId: '123', attempt: 1 } 
+         * });
+         * ```
+         */
         debug(message: string, config?: LogCallConfig): void {
                 this.log('debug', message, config);
         }
 
+        /**
+         * Log trace message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs a trace message with magenta coloring. Trace messages are
+         * used for very detailed execution flow tracking, more granular than debug.
+         */
         trace(message: string, config?: LogCallConfig): void {
                 this.log('trace', message, config);
         }
 
+        /**
+         * Log info message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs an informational message with blue coloring. Info messages
+         * communicate general operational information and system status.
+         */
         info(message: string, config?: LogCallConfig): void {
                 this.log('info', message, config);
         }
 
+        /**
+         * Log success message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs a success message with green coloring. Success messages
+         * indicate completed operations or positive outcomes.
+         */
         success(message: string, config?: LogCallConfig): void {
                 this.log('success', message, config);
         }
 
+        /**
+         * Log warning message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs a warning message with yellow coloring. Warning messages
+         * indicate potential issues or situations requiring attention.
+         */
         warn(message: string, config?: LogCallConfig): void {
                 this.log('warn', message, config);
         }
 
+        /**
+         * Log error message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs an error message with red coloring. Error messages
+         * indicate failures or problems that have occurred in the system.
+         */
         error(message: string, config?: LogCallConfig): void {
                 this.log('error', message, config);
         }
 
+        /**
+         * Log fatal message
+         * 
+         * @param message - The message to log
+         * @param config - Optional per-call configuration for styling and behavior
+         * @description Logs a fatal message with bright red coloring. Fatal messages
+         * indicate critical errors that may cause system failure or instability.
+         */
         fatal(message: string, config?: LogCallConfig): void {
                 this.log('fatal', message, config);
         }
