@@ -3,15 +3,15 @@
  * Showcasing all the fixes and enhancements made
  */
 
-const { 
-        Logger, 
-        createLogger, 
-        MinimalBox, 
+const {
+        Logger,
+        createLogger,
+        MinimalBox,
         Colors,
         formatLevel,
-        info, 
-        warn, 
-        error 
+        info,
+        warn,
+        error
 } = require('../dist/index.js');
 
 console.log('🚀 TraceKit v3.0.0 - Improvements Showcase\n');
@@ -23,7 +23,7 @@ console.log('1️⃣ FIXED: Consistent Spacing Across Log Levels');
 console.log('   All log levels now have uniform emoji + level text formatting:\n');
 
 const levels = ['debug', 'trace', 'info', 'success', 'warn', 'error', 'fatal'];
-levels.forEach(level => {
+levels.forEach((level) => {
         const formatted = formatLevel(level, false);
         console.log(`   ${formatted} ← Level: ${level} (consistent 8-char padding)`);
 });
@@ -57,16 +57,16 @@ const organizedLogger = createLogger({
         namespace: 'OrganizedApp',
         enableTimestamp: true,
         enableColors: true,
-        
-        // TerminalOptions  
+
+        // TerminalOptions
         defaultBoxed: false,
         defaultBorderStyle: 'minimal',
         defaultPadding: 2,
-        
+
         // RemoteOptions
         enableRemote: false,
         transportType: 'websocket',
-        transportTimeout: 8000,  // Note: renamed from remoteTimeout
+        transportTimeout: 8000, // Note: renamed from remoteTimeout
         retryAttempts: 5,
         wsReconnectDelay: 3000
 });
@@ -77,7 +77,7 @@ console.log('   ✅ RemoteOptions: enableRemote, transportType, transportTimeout
 console.log(`   ✅ transportTimeout (renamed): ${organizedLogger.getConfig().transportTimeout}ms`);
 
 // =======================================
-// 4. COMPREHENSIVE JSDOC 
+// 4. COMPREHENSIVE JSDOC
 // =======================================
 console.log('\n4️⃣ ENHANCED: Comprehensive JSDoc Documentation');
 console.log('   All public APIs now have detailed documentation:');
@@ -101,17 +101,17 @@ const minimalDemo = minimalBox.createBox(
 console.log(minimalDemo);
 
 console.log('\n   Logger with minimal style:');
-organizedLogger.info('Deployment completed successfully', { 
+organizedLogger.info('Deployment completed successfully', {
         boxed: true,
         borderStyle: 'minimal',
         title: 'DEPLOYMENT'
 });
 
 organizedLogger.warn('API rate limit approaching', {
-        boxed: true, 
+        boxed: true,
         borderStyle: 'minimal',
         title: 'WARNING',
-        metadata: { 
+        metadata: {
                 requests: 850,
                 limit: 1000,
                 resetTime: '2025-07-20T08:00:00Z'
@@ -148,7 +148,7 @@ styleDemo.info('Clean rounded borders', {
 console.log('\n  🔲 ASCII (compatible):');
 styleDemo.info('Compatible ASCII borders', {
         boxed: true,
-        borderStyle: 'ascii', 
+        borderStyle: 'ascii',
         title: 'ASCII'
 });
 
@@ -166,7 +166,7 @@ console.log('\n🎯 IMPROVEMENTS SUMMARY:');
 console.log('✅ Fixed spacing consistency across all log levels');
 console.log('✅ Removed remoteUrl override for enhanced security');
 console.log('✅ Refactored LoggerConfig into organized interfaces');
-console.log('✅ Added comprehensive JSDoc documentation');  
+console.log('✅ Added comprehensive JSDoc documentation');
 console.log('✅ Implemented MinimalBox style for clean output');
 console.log('✅ Enhanced test coverage (14 tests, all passing)');
 console.log('✅ Improved type safety with BoxBorderStyle');
@@ -179,6 +179,6 @@ console.log('\n🚀 TraceKit v3.0.0 - More powerful, more secure, more polished!
 // Cleanup
 setTimeout(async () => {
         await secureLogger.close();
-        await organizedLogger.close(); 
+        await organizedLogger.close();
         await styleDemo.close();
 }, 100);

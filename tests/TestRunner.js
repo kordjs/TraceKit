@@ -191,12 +191,12 @@ runner.test('New LoggerConfig interfaces work', () => {
                 namespace: 'TestApp',
                 enableTimestamp: true,
                 enableColors: true,
-                
+
                 // Terminal options
                 defaultBoxed: true,
                 defaultBorderStyle: 'minimal',
                 defaultPadding: 2,
-                
+
                 // Remote options
                 enableRemote: true,
                 transportType: 'http',
@@ -220,10 +220,10 @@ runner.test('Remote URLs are fixed and cannot be overridden', () => {
 
         // The logger should use hardcoded URLs, not allow custom ones
         const config = logger.getConfig();
-        
+
         // remoteUrl should not exist in the config anymore
         assert(config.remoteUrl === undefined, 'remoteUrl should not be configurable');
-        
+
         // The logger should still be able to initialize (proving hardcoded URLs work)
         assert(logger.getConfig().enableRemote === true, 'Remote should still be enabled');
 });
@@ -231,13 +231,13 @@ runner.test('Remote URLs are fixed and cannot be overridden', () => {
 // Test: MinimalBox style
 runner.test('MinimalBox style works', () => {
         const { MinimalBox, Colors } = require('../dist/index.js');
-        
+
         const minimalBox = new MinimalBox(2, false); // Disable colors for testing
-        const output = minimalBox.createBox(
-                ['Line 1', 'Line 2'],
-                { title: 'TEST', color: Colors.green }
-        );
-        
+        const output = minimalBox.createBox(['Line 1', 'Line 2'], {
+                title: 'TEST',
+                color: Colors.green
+        });
+
         const lines = output.split('\n');
         assert(lines.length === 3, 'Should have title + 2 content lines');
         assert(lines[0].includes('=== TEST ==='), 'Should have minimal title format');
@@ -247,15 +247,15 @@ runner.test('MinimalBox style works', () => {
 
 // Test: BorderStyle minimal works in logger
 runner.test('Logger supports minimal border style', () => {
-        const logger = new Logger({ 
+        const logger = new Logger({
                 enableRemote: false,
                 defaultBorderStyle: 'minimal'
         });
 
         // This should not throw and should work
         logger.info('Minimal test', { boxed: true });
-        logger.warn('Minimal warning', { 
-                boxed: true, 
+        logger.warn('Minimal warning', {
+                boxed: true,
                 borderStyle: 'minimal',
                 title: 'WARNING'
         });
@@ -264,38 +264,44 @@ runner.test('Logger supports minimal border style', () => {
 // Test: Enhanced configuration options
 runner.test('Enhanced configuration with new options', () => {
         const logger = new Logger();
-        
+
         // Test the renamed transportTimeout
         logger.configure({
                 transportTimeout: 15000,
                 wsReconnectDelay: 3000,
                 wsMaxReconnectAttempts: 10
         });
-        
+
         const config = logger.getConfig();
         assert(config.transportTimeout === 15000, 'transportTimeout should work');
         assert(config.wsReconnectDelay === 3000, 'WebSocket delay should be configurable');
-        assert(config.wsMaxReconnectAttempts === 10, 'Max reconnect attempts should be configurable');
+        assert(
+                config.wsMaxReconnectAttempts === 10,
+                'Max reconnect attempts should be configurable'
+        );
 });
 
 // Test: Spacing consistency
 runner.test('Log level spacing is consistent', () => {
         const { formatLevel } = require('../dist/index.js');
-        
+
         const debugFormatted = formatLevel('debug', false);
         const infoFormatted = formatLevel('info', false);
         const successFormatted = formatLevel('success', false);
         const errorFormatted = formatLevel('error', false);
-        
+
         // Should follow pattern: emoji + space + padded level text
         assert(debugFormatted.includes('🐛 '), 'Debug should have correct icon and spacing');
         assert(infoFormatted.includes('ℹ️ '), 'Info should have correct icon and spacing');
         assert(errorFormatted.includes('❌ '), 'Error should have correct icon and spacing');
-        
+
         // All level texts should be padded to at least 8 characters after emoji
         assert(debugFormatted.includes('DEBUG   '), 'Debug should be properly padded to 8 chars');
         assert(infoFormatted.includes('INFO    '), 'Info should be properly padded to 8 chars');
-        assert(successFormatted.includes('SUCCESS '), 'Success should be properly padded to 8 chars');
+        assert(
+                successFormatted.includes('SUCCESS '),
+                'Success should be properly padded to 8 chars'
+        );
         assert(errorFormatted.includes('ERROR   '), 'Error should be properly padded to 8 chars');
 });
 

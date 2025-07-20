@@ -11,7 +11,11 @@ console.log('1️⃣ Standalone MinimalBox:');
 const minimalBox = new MinimalBox(2, true);
 
 const simpleBox = minimalBox.createBox(
-        ['Application started successfully', 'Database connection established', 'Server listening on port 3000'],
+        [
+                'Application started successfully',
+                'Database connection established',
+                'Server listening on port 3000'
+        ],
         {
                 title: 'STARTUP',
                 color: Colors.green
@@ -28,14 +32,14 @@ const logger = createLogger({
 });
 
 logger.info('Starting application', { boxed: true });
-logger.success('All systems operational', { 
-        boxed: true, 
+logger.success('All systems operational', {
+        boxed: true,
         title: 'SUCCESS',
         padding: 3,
         centered: true
 });
-logger.warn('Low disk space detected', { 
-        boxed: true, 
+logger.warn('Low disk space detected', {
+        boxed: true,
         borderStyle: 'minimal',
         title: 'WARNING'
 });
