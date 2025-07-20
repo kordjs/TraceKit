@@ -24,10 +24,11 @@ export function getDisplayTimestamp(date: Date = new Date()): string {
  */
 export function formatLevel(level: LogLevel, enableColors: boolean = true): string {
         const icon = LogIcons[level] || '';
-        const levelText = level.toUpperCase().padEnd(7);
+        // Pad to 8 characters to ensure SUCCESS (7 chars) gets proper spacing
+        const levelText = level.toUpperCase().padEnd(8);
         const color = getLevelColor(level);
 
-        // Ensure consistent spacing: icon + single space + level text
+        // Ensure consistent spacing: icon + single space + padded level text
         if (enableColors) {
                 return `${icon} ${colorize(levelText, color)}`;
         }
