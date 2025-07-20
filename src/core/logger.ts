@@ -113,7 +113,21 @@ export class Logger {
         }
 
         /**
-         * Update configuration at runtime
+         * Update logger configuration at runtime
+         * 
+         * @param newConfig - Partial configuration to merge with existing settings
+         * @description Updates the logger configuration with new values. The configuration
+         * is merged with existing settings, so only provided values are changed. If remote
+         * transport settings are modified, the transport connection will be re-initialized.
+         * 
+         * @example
+         * ```typescript
+         * logger.configure({
+         *   namespace: 'UpdatedApp',
+         *   enableRemote: true,
+         *   transportType: 'websocket'
+         * });
+         * ```
          */
         configure(newConfig: Partial<LoggerConfig>): void {
                 const oldRemoteEnabled = this.config.enableRemote;
@@ -144,7 +158,12 @@ export class Logger {
         }
 
         /**
-         * Get current configuration
+         * Get current logger configuration
+         * 
+         * @returns Complete configuration object with all default values resolved
+         * @description Returns a copy of the current configuration. This includes
+         * all configuration values with defaults resolved, providing insight into
+         * the logger's current operational state.
          */
         getConfig(): Required<LoggerConfig> {
                 return { ...this.config };
