@@ -339,7 +339,7 @@ export class Logger {
         }
 
         /**
-         * Output boxed log
+         * Output boxed log with support for multiple border styles
          */
         private outputBoxedLog(entry: InternalLogEntry, callConfig?: LogCallConfig): void {
                 const borderStyle = callConfig?.borderStyle ?? this.config.defaultBorderStyle;
@@ -347,8 +347,6 @@ export class Logger {
                 const title = callConfig?.title;
                 const centered = callConfig?.centered ?? false;
                 const color = callConfig?.color ?? getLevelColor(entry.level);
-
-                const boxLogger = new BoxLogger(borderStyle, padding, this.config.enableColors);
 
                 // Prepare content
                 const contentLines: string[] = [];
@@ -365,12 +363,26 @@ export class Logger {
                         contentLines.push(JSON.stringify(entry.metadata, null, 2));
                 }
 
-                const boxed = boxLogger.createBox(contentLines, {
-                        title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
-                        color,
-                        centered,
-                        minWidth: 50
-                });
+                let boxed: string;
+
+                if (borderStyle === 'minimal') {
+                        // Use MinimalBox for borderless output
+                        const minimalBox = new MinimalBox(padding, this.config.enableColors);
+                        boxed = minimalBox.createBox(contentLines, {
+                                title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
+                                color,
+                                centered
+                        });
+                } else {
+                        // Use traditional BoxLogger for bordered output
+                        const boxLogger = new BoxLogger(borderStyle, padding, this.config.enableColors);
+                        boxed = boxLogger.createBox(contentLines, {
+                                title: title || `${entry.level.toUpperCase()} - ${entry.namespace}`,
+                                color,
+                                centered,
+                                minWidth: 50
+                        });
+                }
 
                 console.log(boxed);
         }
