@@ -96,7 +96,22 @@ export const LogIcons = {
 } as const;
 
 /**
- * Apply color to text
+ * Apply ANSI color codes to text
+ * 
+ * @param text - The text to colorize
+ * @param color - ANSI color code to apply
+ * @param enableColors - Whether to apply colors (default: true)
+ * @returns Colorized text with ANSI codes, or plain text if colors disabled
+ * 
+ * @description Wraps text with the specified ANSI color code and reset sequence.
+ * If colors are disabled, returns the original text unchanged. This function
+ * handles the common pattern of applying colors conditionally.
+ * 
+ * @example
+ * ```typescript
+ * const redText = colorize('Error!', Colors.red);
+ * const plainText = colorize('No color', Colors.red, false);
+ * ```
  */
 export function colorize(text: string, color: string, enableColors: boolean = true): string {
         if (!enableColors) return text;
@@ -104,7 +119,19 @@ export function colorize(text: string, color: string, enableColors: boolean = tr
 }
 
 /**
- * Get color for log level
+ * Get the appropriate color for a log level
+ * 
+ * @param level - The log level to get color for
+ * @returns ANSI color code for the log level
+ * 
+ * @description Maps log levels to their corresponding colors from the Colors object.
+ * Falls back to info color (blue) if the level is not recognized.
+ * 
+ * @example
+ * ```typescript
+ * const errorColor = getLevelColor('error'); // Returns Colors.error (red)
+ * const customColor = getLevelColor('custom'); // Returns Colors.info (blue)
+ * ```
  */
 export function getLevelColor(level: string): string {
         return (Colors as any)[level] || Colors.info;
