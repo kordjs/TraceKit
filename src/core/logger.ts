@@ -3,7 +3,8 @@ import {
         LoggerConfig,
         LogCallConfig,
         InternalLogEntry,
-        Transport
+        Transport,
+        BoxBorderStyle
 } from '../types';
 import { formatTimestamp, formatSimpleMessage } from '../utils/formatter';
 import { BoxLogger, MinimalBox } from '../utils/box';
