@@ -5,23 +5,22 @@ This directory contains the source code and built package for `@kordjs/tracekit`
 ## Directory Structure
 
 ```
-/app/
-├── src/                     # TypeScript source code
-│   ├── core/               # Core logger implementation
-│   ├── transports/         # Remote transport implementations
+/TraceKit/
+├── src/                   # TypeScript source code
+│   ├── core/              # Core logger implementation
+│   ├── transports/        # Remote transport
 │   ├── utils/             # Utility functions
-│   ├── test/              # TypeScript test files
 │   ├── types.ts           # Type definitions
 │   └── index.ts           # Main export file
-├── dist/                   # Compiled JavaScript output
+├── dist/                  # Compiled JavaScript output
 │   ├── index.js           # CommonJS build
 │   ├── index.mjs          # ES Module build
 │   └── index.d.ts         # Type definitions
-├── examples/              # Usage examples
+├── tests/                 # Testing Files
 ├── package.json           # Package configuration
 ├── tsconfig.json          # TypeScript configuration
 ├── tsup.config.js         # Build configuration
-└── README.md             # Documentation
+└── README.md              # Documentation
 ```
 
 ## Development
@@ -35,30 +34,19 @@ This directory contains the source code and built package for `@kordjs/tracekit`
 2. **Build the package**:
 
       ```bash
-      npm run build
+      yarn build
       ```
 
 3. **Development build with watch**:
 
       ```bash
-      npm run dev
+      yarn dev
       ```
 
-4. **Run examples**:
+4. **Run tests**:
 
       ```bash
-      node examples/basic-usage.js
-      ```
-
-5. **Run tests**:
-
-      ```bash
-      node test-runner.js
-      ```
-
-6. **Test remote functionality**:
-      ```bash
-      node test-remote.js
+      node tests/TestRunner.js
       ```
 
 ## Features Implemented
@@ -110,5 +98,3 @@ This directory contains the source code and built package for `@kordjs/tracekit`
 - InMemoryTransport for unit tests
 - Comprehensive test suite
 - Example implementations
-
-The package is ready for publishing to NPM!

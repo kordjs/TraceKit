@@ -1,7 +1,9 @@
 # @kordjs/tracekit - Production Release
 
 **Version**: 3.0.0
-**Release Date**: July 2025  
+
+**Release Date**: July 2025
+
 **License**: MIT
 
 ## 🚀 Ready for Production
@@ -99,10 +101,7 @@ logger.fatal('Database connection failed', {
 
 ```bash
 # .env file
-LOG_ENDPOINT=https://your-log-server.com/api/logs
 LOG_TOKEN=your-secure-authentication-token
-LOG_LEVEL=info
-LOG_REMOTE_LEVEL=warn
 ```
 
 ## 📊 **Performance Characteristics**
