@@ -39,38 +39,59 @@ export interface LogCallConfig {
 }
 
 /**
- * Global logger configuration
+ * General logging options
  */
-export interface LoggerConfig {
-        // General settings
+export interface GeneralOptions {
+        /** Logger namespace for message categorization */
         namespace?: string;
+        /** Enable timestamp display in log messages */
         enableTimestamp?: boolean;
+        /** Enable ANSI color codes in terminal output */
         enableColors?: boolean;
+}
 
-        // Terminal settings
+/**
+ * Terminal-specific display options
+ */
+export interface TerminalOptions {
+        /** Default boxed output style for all log messages */
         defaultBoxed?: boolean;
+        /** Default border style for boxed output */
         defaultBorderStyle?: BorderStyle;
+        /** Default padding for boxed output */
         defaultPadding?: number;
+}
 
-        // Remote settings
+/**
+ * Remote transport and logging options
+ */
+export interface RemoteOptions {
+        /** Enable remote logging transport */
         enableRemote?: boolean;
-        remoteUrl?: string;
+        /** Transport type for remote logging */
         transportType?: TransportType;
-        remoteTimeout?: number;
+        /** Timeout for remote transport operations in milliseconds */
+        transportTimeout?: number;
+        /** Number of retry attempts for failed remote operations */
         retryAttempts?: number;
-
-        // Authentication
+        /** Authentication token for remote services */
         authToken?: string;
-
-        // WebSocket specific
+        /** WebSocket reconnection delay in milliseconds */
         wsReconnectDelay?: number;
+        /** Maximum WebSocket reconnection attempts */
         wsMaxReconnectAttempts?: number;
+        /** Enable fallback to HTTP transport if WebSocket fails */
         fallbackToHttp?: boolean;
-
-        // Log levels
+        /** Minimum log level for terminal output */
         minLevel?: LogLevel;
+        /** Minimum log level for remote transport */
         remoteMinLevel?: LogLevel;
 }
+
+/**
+ * Combined logger configuration interface
+ */
+export type LoggerConfig = GeneralOptions & TerminalOptions & RemoteOptions;
 
 /**
  * Transport interface that all transports must implement
