@@ -32,7 +32,7 @@ export {
 
 // Utilities
 export { Colors, LogIcons, colorize, getLevelColor } from './utils/colors';
-export { BoxLogger } from './utils/box';
+export { BoxLogger, MinimalBox } from './utils/box';
 export { formatTimestamp, getDisplayTimestamp, formatLevel } from './utils/formatter';
 
 // Create default logger instance
