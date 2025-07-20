@@ -158,7 +158,7 @@ export class Logger {
 
                 // Update box logger
                 this.boxLogger = new BoxLogger(
-                        this.config.defaultBorderStyle,
+                        this.getBoxBorderStyle(this.config.defaultBorderStyle),
                         this.config.defaultPadding,
                         this.config.enableColors
                 );
