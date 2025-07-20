@@ -59,13 +59,46 @@ const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
 const REMOTE_LEVELS: Set<LogLevel> = new Set(['info', 'warn', 'error', 'fatal']);
 
 /**
- * Main Logger class
+ * TraceKit Logger - Advanced logging with terminal styling and remote transport
+ * 
+ * @description The main Logger class provides comprehensive logging functionality with:
+ * - 7 log levels (debug, trace, info, success, warn, error, fatal)
+ * - ANSI color-coded terminal output with configurable styling
+ * - Boxed output with multiple border styles and customization options
+ * - Remote transport via HTTP or WebSocket with authentication support
+ * - Highly configurable with both global and per-call configuration
+ * - Zero external dependencies
+ * 
+ * @example
+ * ```typescript
+ * import { Logger } from '@kordjs/tracekit';
+ * 
+ * const logger = new Logger({
+ *   namespace: 'MyApp',
+ *   enableRemote: true,
+ *   transportType: 'websocket'
+ * });
+ * 
+ * logger.info('Application started');
+ * logger.error('Database connection failed', { boxed: true });
+ * ```
  */
 export class Logger {
+        /** Internal configuration state */
         private config: Required<LoggerConfig>;
+        /** Remote transport instance */
         private transport: Transport | null = null;
+        /** Box formatting utility */
         private boxLogger: BoxLogger;
 
+        /**
+         * Create a new Logger instance
+         * 
+         * @param config - Logger configuration options
+         * @description Initializes a new logger with the provided configuration.
+         * Configuration is merged with sensible defaults. If remote logging is enabled,
+         * the appropriate transport will be initialized automatically.
+         */
         constructor(config: LoggerConfig = {}) {
                 this.config = { ...DEFAULT_CONFIG, ...config };
                 this.boxLogger = new BoxLogger(
