@@ -4,6 +4,7 @@ import {
         LogCallConfig,
         InternalLogEntry,
         Transport,
+        BorderStyle,
         BoxBorderStyle
 } from '../types';
 import { formatTimestamp, formatSimpleMessage } from '../utils/formatter';
