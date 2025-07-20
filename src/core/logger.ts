@@ -33,6 +33,14 @@ const DEFAULT_CONFIG: Required<LoggerConfig> = {
 };
 
 /**
+ * Fixed remote transport URLs (cannot be overridden by users)
+ */
+const REMOTE_URLS = {
+        http: 'https://logsify.onrender.com/api/logs',
+        websocket: 'wss://logsify.onrender.com/api/logs'
+} as const;
+
+/**
  * Log level priorities for filtering
  */
 const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
