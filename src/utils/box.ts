@@ -1,4 +1,4 @@
-import { BorderStyle } from '../types';
+import { BorderStyle, BoxBorderStyle } from '../types';
 import { Colors, colorize } from './colors';
 
 /**
