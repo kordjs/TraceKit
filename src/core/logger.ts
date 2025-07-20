@@ -6,7 +6,7 @@ import {
         Transport
 } from '../types';
 import { formatTimestamp, formatSimpleMessage } from '../utils/formatter';
-import { BoxLogger } from '../utils/box';
+import { BoxLogger, MinimalBox } from '../utils/box';
 import { getLevelColor } from '../utils/colors';
 import { createTransport } from '../transports';
 
