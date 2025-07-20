@@ -14,6 +14,9 @@ export type {
         TransportType,
         LogEntry,
         LogCallConfig,
+        GeneralOptions,
+        TerminalOptions,
+        RemoteOptions,
         LoggerConfig,
         Transport,
         InternalLogEntry
